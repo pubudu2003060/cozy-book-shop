@@ -7,8 +7,20 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+app.get("/callapi", (req, res) => {
+  res.status(200).json({
+    status: true,
+    message: "Backend is called successfully",
+  });
 });
 
 app.listen(PORT, () => {
