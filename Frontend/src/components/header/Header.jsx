@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
+import { signinContext } from "../../App";
 
 const Header = () => {
+  const { isLogin, setIsLogin } = useContext(signinContext);
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0); // Replace with actual cart count logic
+  const [cartCount, setCartCount] = useState(0);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLogout = () => {
+    if (isLogin) {
+      setIsLogin(false);
+      localStorage.removeItem("accessToken");
+    }
   };
 
   return (
@@ -60,30 +70,43 @@ const Header = () => {
       </nav>
 
       <div className="flex items-center space-x-3 md:space-x-4">
-        <Link
-          to="/signin"
-          className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
-        >
-          Sign In
-        </Link>
-        <Link
-          to="/signup"
-          className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
-        >
-          Sign Up
-        </Link>
-        <Link
-          to="/cart"
-          className="relative font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
-        >
-          <span className="absolute top-[-15px] right-0 bg-orange-600 dark:bg-orange-500 rounded-2xl h-5 w-5 flex items-center justify-center text-xs text-neutral-100 dark:text-neutral-900">
-            {cartCount}
-          </span>
-          <ShoppingCart />
-        </Link>
-        <button className="bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-3 py-1 rounded-md hover:bg-green-800 dark:hover:bg-green-700 text-sm md:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700">
-          Log Out
-        </button>
+        {isLogin ? (
+          <>
+            <button
+              onClick={handleLogout}
+              className="bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-3 py-1 rounded-md hover:bg-green-800 dark:hover:bg-green-700 text-sm md:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
+            >
+              Log Out
+            </button>
+
+            <Link
+              to="/cart"
+              className="relative font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+            >
+              <span className="absolute top-[-15px] right-0 bg-orange-600 dark:bg-orange-500 rounded-2xl h-5 w-5 flex items-center justify-center text-xs text-neutral-100 dark:text-neutral-900">
+                {cartCount}
+              </span>
+              <ShoppingCart />
+            </Link>
+          </>
+        ) : (
+          <>
+            {" "}
+            <Link
+              to="/signin"
+              className="hidden md:block font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+            >
+              Sign In
+            </Link>
+            <Link
+              to="/signup"
+              className="hidden md:block font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
+
         <DarkmoodToggler />
       </div>
 
@@ -157,6 +180,31 @@ const Header = () => {
                 Contact
               </Link>
             </li>
+            {isLogin ? (
+              <></>
+            ) : (
+              <>
+                <li className="w-full">
+                  <Link
+                    to="/signin"
+                    className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                    onClick={toggleMobileMenu}
+                  >
+                    Sign In
+                  </Link>
+                </li>
+
+                <li className="w-full">
+                  <Link
+                    to="/signup"
+                    className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                    onClick={toggleMobileMenu}
+                  >
+                    Sign Up
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       )}

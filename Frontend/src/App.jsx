@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./screns/home/Home";
@@ -11,23 +11,29 @@ import About from "./screns/about/About";
 import Contact from "./screns/contact/Contact";
 import { ToastContainer } from "react-toastify";
 
+export const signinContext = createContext();
+
 const App = () => {
+  const [isLogin, setIsLogin] = React.useState(false);
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="allitems" element={<AllItems />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="item" element={<Item />} />
-            <Route path="cart" element={<Cart />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <signinContext.Provider value={{ isLogin, setIsLogin }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="allitems" element={<AllItems />} />
+              <Route path="about" element={<About />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="item" element={<Item />} />
+              <Route path="cart" element={<Cart />} />
+              <Route path="signin" element={<SignIn />} />
+              <Route path="signup" element={<SignUp />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </signinContext.Provider>
 
       <ToastContainer
         position="top-center"

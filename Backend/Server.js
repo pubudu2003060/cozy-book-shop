@@ -1,6 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { connectDb } from "./configs/DBConnection.js";
+import userRouter from "./rotues/User.route.js";
+import bookRoute from "./rotues/Book.route.js";
 
 const app = express();
 dotenv.config();
@@ -16,13 +19,11 @@ app.use(
 
 app.use(express.json());
 
-app.get("/callapi", (req, res) => {
-  res.status(200).json({
-    status: true,
-    message: "Backend is called successfully",
-  });
-});
+app.use("/api/user", userRouter);
 
-app.listen(PORT, () => {
+app.use("/api/book", bookRoute);
+
+app.listen(PORT, async () => {
+  await connectDb();
   console.log("Server is running on http://localhost:" + PORT);
 });
