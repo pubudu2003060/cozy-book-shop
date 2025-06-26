@@ -1,44 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import logo from "../../assets/logo/logo.jpg";
+import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
+import { ShoppingCart } from "lucide-react";
 
 const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0); // Replace with actual cart count logic
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <header className="flex items-center justify-between px-8 py-4 bg-white shadow-md">
+    <header className="relative flex items-center justify-between px-4 py-3 bg-white dark:bg-[#1a1611] shadow-md md:px-8 md:py-4">
       <div>
-        <img src={logo} alt="" className="h-10 w-10 object-contain" />
+        <Link
+          to="/"
+          className="font-heading text-2xl md:text-3xl text-amber-900 dark:text-amber-700"
+        >
+          Bookshop
+        </Link>
       </div>
 
-      <nav>
+      <nav className="hidden md:block">
         <ul className="flex space-x-6">
           <li>
             <Link
-              to=""
-              className="text-gray-700 hover:text-blue-600 font-medium"
+              to="/"
+              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
             >
               Home
             </Link>
           </li>
           <li>
             <Link
-              to="allitems"
-              className="text-gray-700 hover:text-blue-600 font-medium"
+              to="/allitems"
+              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
             >
               All Items
             </Link>
           </li>
           <li>
             <Link
-              to="about"
-              className="text-gray-700 hover:text-blue-600 font-medium"
+              to="/about"
+              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
             >
               About
             </Link>
           </li>
           <li>
             <Link
-              to="contact"
-              className="text-gray-700 hover:text-blue-600 font-medium"
+              to="/contact"
+              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
             >
               Contact
             </Link>
@@ -46,20 +59,107 @@ const Header = () => {
         </ul>
       </nav>
 
-      <div className="flex items-center space-x-4">
-        <Link to="signin" className="text-gray-600 hover:text-blue-600">
+      <div className="flex items-center space-x-3 md:space-x-4">
+        <Link
+          to="/signin"
+          className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+        >
           Sign In
         </Link>
-        <Link to="signup" className="text-gray-600 hover:text-blue-600">
+        <Link
+          to="/signup"
+          className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+        >
           Sign Up
         </Link>
-        <Link to="cart" className="text-gray-600 hover:text-blue-600">
-          Cart
+        <Link
+          to="/cart"
+          className="relative font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+        >
+          <span className="absolute top-[-15px] right-0 bg-orange-600 dark:bg-orange-500 rounded-2xl h-5 w-5 flex items-center justify-center text-xs text-neutral-100 dark:text-neutral-900">
+            {cartCount}
+          </span>
+          <ShoppingCart />
         </Link>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <button className="bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-3 py-1 rounded-md hover:bg-green-800 dark:hover:bg-green-700 text-sm md:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700">
           Log Out
         </button>
+        <DarkmoodToggler />
       </div>
+
+      {/* Mobile Menu Toggle */}
+      <div className="md:hidden">
+        <button
+          className="text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 focus:outline-none"
+          aria-label={
+            isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
+          }
+          onClick={toggleMobileMenu}
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d={
+                isMobileMenuOpen
+                  ? "M6 18L18 6M6 6l12 12"
+                  : "M4 6h16M4 12h16m-7 6h7"
+              }
+            />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <nav className="md:hidden absolute top-full left-0 w-full bg-neutral-50 dark:bg-[#2d251f] shadow-md">
+          <ul className="flex flex-col items-center py-4">
+            <li className="w-full">
+              <Link
+                to="/"
+                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                onClick={toggleMobileMenu}
+              >
+                Home
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="/allitems"
+                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                onClick={toggleMobileMenu}
+              >
+                All Items
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="/about"
+                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                onClick={toggleMobileMenu}
+              >
+                About
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="/contact"
+                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                onClick={toggleMobileMenu}
+              >
+                Contact
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
     </header>
   );
 };
