@@ -4,6 +4,7 @@ import cors from "cors";
 import { connectDb } from "./configs/DBConnection.js";
 import userRouter from "./rotues/User.route.js";
 import bookRoute from "./rotues/Book.route.js";
+import cartRoute from "./rotues/Cart.route.js";
 
 const app = express();
 dotenv.config();
@@ -22,6 +23,8 @@ app.use(express.json());
 app.use("/api/user", userRouter);
 
 app.use("/api/book", bookRoute);
+
+app.use("/api/cart", cartRoute);
 
 app.listen(PORT, async () => {
   await connectDb();

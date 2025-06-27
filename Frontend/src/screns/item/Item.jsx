@@ -64,6 +64,51 @@ const Item = () => {
     }
   }, [id, isLogin, navigate]);
 
+  const handleAddToCart = async () => {
+    try {
+      const cartData = {
+        bookId: id,
+      };
+      const responce = await JWTAxios.post("/cart/addtocart", cartData);
+      if (responce.data.status) {
+        toast.success("Book added to cart successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        navigate("/cart");
+      } else {
+        toast.error(responce.data.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("Error adding book to cart:", error);
+      toast.error("Error to add book to cart", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
   if (error)
     return (
       <div className="text-red-500 text-center mt-8 text-lg font-semibold">
@@ -140,14 +185,13 @@ const Item = () => {
               </ul>
             </div>
 
-            {/* Add to Cart Button */}
-            <Link
-              to={`/cart/${book.id}?quantity=1`}
+            <button
+              onClick={handleAddToCart}
               className="inline-block w-full sm:w-auto bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-6 py-3 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700 text-center"
               aria-label={`Add ${book.title} to cart`}
             >
               Add to Cart
-            </Link>
+            </button>
           </div>
         </div>
 
