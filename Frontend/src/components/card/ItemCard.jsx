@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ItemCard = ({ item }) => {
   return (
@@ -18,9 +19,11 @@ const ItemCard = ({ item }) => {
         <p className="font-body text-neutral-900 dark:text-neutral-100 font-medium mb-4">
           <strong>Price:</strong> ${item.price}
         </p>
-        <button className="w-full bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700">
-          Add to Cart
-        </button>
+        <Link to={`/item/${item.id}`}>
+          <button className="w-full bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700">
+            Show
+          </button>
+        </Link>
       </div>
     </div>
   );
