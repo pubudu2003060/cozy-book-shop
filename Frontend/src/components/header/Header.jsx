@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
 import { signinContext } from "../../App";
@@ -10,6 +10,8 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
 
+  const navigate = useNavigate();
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -18,6 +20,7 @@ const Header = () => {
     if (isLogin) {
       setIsLogin(false);
       localStorage.removeItem("accessToken");
+      navigate("/");
     }
   };
 

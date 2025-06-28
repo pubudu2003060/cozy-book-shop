@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment, incrementByAmount } from "../../store/Bookslice";
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const count = useSelector((state) => state.book.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -58,9 +63,11 @@ const Cart = () => {
 
   if (error)
     return (
-      <div className="text-red-500 text-center mt-8 text-lg font-semibold">
-        {error}
-      </div>
+      <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100">
+          {error}
+        </h2>
+      </main>
     );
 
   if (!cart || cart.books.length === 0)
@@ -94,12 +101,20 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#1a1611] py-8 px-4 sm:px-6 lg:px-8">
+      <div>
+        <button onClick={() => dispatch(decrement())}>–</button>
+        <span>{count}</span>
+        <button onClick={() => dispatch(increment())}>+</button>
+        <button onClick={() => dispatch(incrementByAmount(10))}>+10</button>
+      </div>
+
       <div className="max-w-4xl mx-auto bg-neutral-50 dark:bg-[#2d251f] rounded-lg shadow-md overflow-hidden">
         <div className="p-6 border-b border-neutral-200 dark:border-[#3d342a]">
           <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
             Your Cart
           </h2>
         </div>
+
         <div className="p-6">
           <ul className="space-y-4">
             {cart.books.map((item, index) => (
