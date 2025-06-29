@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
-import { signinContext } from "../../App";
+import { useSelector } from "react-redux";
 
 const Item = () => {
-  const { isLogin, setIsLogin } = useContext(signinContext);
+  const isLogin = useSelector((state) => state.user.isLogedIn);
   const navigate = useNavigate();
   const { id } = useParams();
 

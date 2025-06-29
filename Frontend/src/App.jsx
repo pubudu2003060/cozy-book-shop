@@ -11,29 +11,23 @@ import About from "./screns/about/About";
 import Contact from "./screns/contact/Contact";
 import { ToastContainer } from "react-toastify";
 
-export const signinContext = createContext();
-
 const App = () => {
-  const [isLogin, setIsLogin] = React.useState(false);
-
   return (
     <>
-      <signinContext.Provider value={{ isLogin, setIsLogin }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="allitems" element={<AllItems />} />
-              <Route path="about" element={<About />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="item/:id" element={<Item />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="signin" element={<SignIn />} />
-              <Route path="signup" element={<SignUp />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </signinContext.Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="allitems" element={<AllItems />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="item/:id" element={<Item />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="signin" element={<SignIn />} />
+            <Route path="signup" element={<SignUp />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
 
       <ToastContainer
         position="top-center"

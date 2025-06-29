@@ -2,10 +2,12 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
-import { signinContext } from "../../App";
+import { useDispatch, useSelector } from "react-redux";
+import { logedOut } from "../../state/user/UserSlice";
 
 const Header = () => {
-  const { isLogin, setIsLogin } = useContext(signinContext);
+  const isLogin = useSelector((state) => state.user.isLogedIn);
+  const dispatch = useDispatch();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -18,7 +20,7 @@ const Header = () => {
 
   const handleLogout = () => {
     if (isLogin) {
-      setIsLogin(false);
+      dispatch(logedOut());
       localStorage.removeItem("accessToken");
       navigate("/");
     }

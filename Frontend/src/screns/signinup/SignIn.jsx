@@ -2,10 +2,12 @@ import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { freeAxios } from "../../api/Axios";
 import { useNavigate } from "react-router-dom";
-import { signinContext } from "../../App";
+
+import { useDispatch } from "react-redux";
+import { logedIn } from "../../state/user/UserSlice";
 
 const SignIn = () => {
-  const { isLogin, setIsLogin } = useContext(signinContext);
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -43,7 +45,7 @@ const SignIn = () => {
           email: "",
           password: "",
         });
-        setIsLogin(true);
+        dispatch(logedIn());
         navigate("/");
       } else {
         toast.error("User signed in fail", {

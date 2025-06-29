@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment, incrementByAmount } from "../../store/Bookslice";
+import {
+  decrement,
+  increment,
+  incrementByAmount,
+} from "../../state/book/Bookslice";
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
@@ -101,13 +105,6 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#1a1611] py-8 px-4 sm:px-6 lg:px-8">
-      <div>
-        <button onClick={() => dispatch(decrement())}>–</button>
-        <span>{count}</span>
-        <button onClick={() => dispatch(increment())}>+</button>
-        <button onClick={() => dispatch(incrementByAmount(10))}>+10</button>
-      </div>
-
       <div className="max-w-4xl mx-auto bg-neutral-50 dark:bg-[#2d251f] rounded-lg shadow-md overflow-hidden">
         <div className="p-6 border-b border-neutral-200 dark:border-[#3d342a]">
           <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
