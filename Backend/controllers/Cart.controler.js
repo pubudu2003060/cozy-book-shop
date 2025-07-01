@@ -77,3 +77,30 @@ export const loadCartData = async (req, res) => {
     });
   }
 };
+
+export const getCartCount = async (req, res) => {
+  try {
+    const cartId = req.user.cartId;
+    const cart = await Cart.findById(cartId);
+    if (!cart) {
+      res.status(404).json({
+        status: false,
+        message: "Cartnot found",
+      });
+    }
+
+    const cartSIze = cart.books.length;
+
+    res.status(200).json({
+      status: true,
+      length: cartSIze,
+      message: "cart size",
+    });
+  } catch (error) {
+    console.log("Cart length find error: ", error.message);
+    res.status(500).json({
+      status: false,
+      message: "cart length find error",
+    });
+  }
+};

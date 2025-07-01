@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { increaseCountByOne } from "../../state/cart/CartSlice";
 
 const Item = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
@@ -12,6 +13,8 @@ const Item = () => {
   console.log("Item ID:", id);
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!isLogin) {
@@ -81,6 +84,7 @@ const Item = () => {
           progress: undefined,
           theme: "dark",
         });
+        dispatch(increaseCountByOne());
         navigate("/cart");
       } else {
         toast.error(responce.data.message, {

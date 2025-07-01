@@ -21,6 +21,18 @@ const SignUp = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const getCartLength = async () => {
+    try {
+      const responce = await JWTAxios.get("/cart/getcartsize");
+      if (responce.data.status) {
+        dispatch(increaseCountByAmount(responce.data.length));
+      } else {
+      }
+    } catch (error) {
+      console.log("Error in get cart size: ", error.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -63,6 +75,7 @@ const SignUp = () => {
           password: "",
           confirmPassword: "",
         });
+        getCartLength();
         dispatch(logedIn());
         navigate("/");
       } else {

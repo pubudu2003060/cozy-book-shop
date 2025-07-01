@@ -1,5 +1,9 @@
 import express from "express";
-import { addToCart, loadCartData } from "../controllers/Cart.controler.js";
+import {
+  addToCart,
+  loadCartData,
+  getCartCount,
+} from "../controllers/Cart.controler.js";
 import { verifyAccessToken } from "../middleware/JWT.js";
 
 const cartRoute = express.Router();
@@ -7,5 +11,7 @@ const cartRoute = express.Router();
 cartRoute.post("/addtocart", verifyAccessToken, addToCart);
 
 cartRoute.get("/loadcartdata", verifyAccessToken, loadCartData);
+
+cartRoute.get("/getcartsize", verifyAccessToken, getCartCount);
 
 export default cartRoute;

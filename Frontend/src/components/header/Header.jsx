@@ -1,16 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logedOut } from "../../state/user/UserSlice";
+import {
+  increaseCountByAmount,
+  resetCartCount,
+} from "../../state/cart/CartSlice";
+import { JWTAxios } from "../../api/Axios";
 
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
   const dispatch = useDispatch();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  const cartCount = useSelector((state) => state.cart.itemCount);
 
   const navigate = useNavigate();
 
@@ -21,10 +26,27 @@ const Header = () => {
   const handleLogout = () => {
     if (isLogin) {
       dispatch(logedOut());
+      dispatch(resetCartCount());
       localStorage.removeItem("accessToken");
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    const fetchCartSize = async () => {
+      try {
+        const responce = await JWTAxios.get("/cart/getcartsize");
+        if (responce.data.status) {
+          const cartsize = responce.data.length;
+          useDispatch(increaseCountByAmount(cartsize));
+        }
+      } catch (error) {
+        console.log("Error in fetching cart size:", error.message);
+      }
+    };
+
+    fetchCartSize();
+  }, [isLogin]);
 
   return (
     <header className="relative flex items-center justify-between px-4 py-3 bg-white dark:bg-[#1a1611] shadow-md md:px-8 md:py-4">

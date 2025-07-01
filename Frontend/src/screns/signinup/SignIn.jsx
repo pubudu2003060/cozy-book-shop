@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { freeAxios } from "../../api/Axios";
+import { freeAxios, JWTAxios } from "../../api/Axios";
 import { useNavigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logedIn } from "../../state/user/UserSlice";
+import { increaseCountByAmount } from "../../state/cart/CartSlice";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,18 @@ const SignIn = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const getCartLength = async () => {
+    try {
+      const responce = await JWTAxios.get("/cart/getcartsize");
+      if (responce.data.status) {
+        dispatch(increaseCountByAmount(responce.data.length));
+      } else {
+      }
+    } catch (error) {
+      console.log("Error in get cart size: ", error.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -45,6 +58,7 @@ const SignIn = () => {
           email: "",
           password: "",
         });
+        getCartLength();
         dispatch(logedIn());
         navigate("/");
       } else {
