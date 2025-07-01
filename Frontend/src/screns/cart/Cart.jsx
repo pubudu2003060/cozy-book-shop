@@ -8,9 +8,16 @@ import {
   increment,
   incrementByAmount,
 } from "../../state/book/Bookslice";
+import { Minus, Plus } from "lucide-react";
+import {
+  addDatatoCart,
+  decreaseCartItemAmountByid,
+  increaseCartItemAmountByid,
+} from "../../state/cart/CartSlice";
 
 const Cart = () => {
-  const [cart, setCart] = useState(null);
+  // const [cart, setCart] = useState(null);
+  const cart = useSelector((state) => state.cart.data);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +29,8 @@ const Cart = () => {
       try {
         const response = await JWTAxios.get("/cart/loadcartdata");
         if (response.data.status) {
-          setCart(response.data.cart);
+          console.log(response.data.cart);
+          dispatch(addDatatoCart(response.data.cart));
         } else {
           setError(response.data.message);
           toast.error(response.data.message, {
@@ -74,7 +82,7 @@ const Cart = () => {
       </main>
     );
 
-  if (!cart || cart.books.length === 0)
+  if (!cart)
     return (
       <div className="min-h-screen bg-white dark:bg-[#1a1611] py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto bg-neutral-50 dark:bg-[#2d251f] rounded-lg shadow-md overflow-hidden">
@@ -98,7 +106,7 @@ const Cart = () => {
       </div>
     );
 
-  const totalPrice = cart.books.reduce(
+  const totalPrice = cart.reduce(
     (total, item) => total + item.bookId.price * item.quantity,
     0
   );
@@ -114,7 +122,7 @@ const Cart = () => {
 
         <div className="p-6">
           <ul className="space-y-4">
-            {cart.books.map((item, index) => (
+            {cart.map((item, index) => (
               <li
                 key={index}
                 className="flex flex-col sm:flex-row gap-4 border-b border-neutral-200 dark:border-[#3d342a] pb-4"
@@ -135,9 +143,35 @@ const Cart = () => {
                   <p className="text-amber-700 dark:text-amber-200">
                     Price: ${item.bookId.price.toFixed(2)}
                   </p>
-                  <p className="text-amber-700 dark:text-amber-200">
-                    Quantity: {item.quantity}
-                  </p>
+                  <div className="flex gap-5 items-center">
+                    <div>
+                      <p className="text-amber-700 dark:text-amber-200">
+                        Quantity:
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() =>
+                          dispatch(increaseCartItemAmountByid(item.bookId._id))
+                        }
+                        className="text-neutral-900 dark:text-neutral-100 border-1 rounded-2xl border-orange-600 dark:border-orange-500"
+                      >
+                        <Plus />
+                      </button>
+                      <p className="text-amber-700 dark:text-amber-200">
+                        {item.quantity}
+                      </p>
+                      <button
+                        onClick={() =>
+                          dispatch(decreaseCartItemAmountByid(item.bookId._id))
+                        }
+                        className="text-neutral-900 dark:text-neutral-100 border-1 rounded-2xl border-orange-600 dark:border-orange-500"
+                      >
+                        <Minus />
+                      </button>
+                    </div>
+                  </div>
+
                   <p className="text-amber-700 dark:text-amber-200 font-medium">
                     Subtotal: ${(item.bookId.price * item.quantity).toFixed(2)}
                   </p>

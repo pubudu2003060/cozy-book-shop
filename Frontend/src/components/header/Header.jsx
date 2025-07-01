@@ -4,11 +4,7 @@ import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logedOut } from "../../state/user/UserSlice";
-import {
-  increaseCountByAmount,
-  resetCartCount,
-} from "../../state/cart/CartSlice";
-import { JWTAxios } from "../../api/Axios";
+import { resetCartCount } from "../../state/cart/CartSlice";
 
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);

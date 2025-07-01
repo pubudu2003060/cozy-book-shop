@@ -67,7 +67,7 @@ export const loadCartData = async (req, res) => {
     return res.status(200).json({
       status: true,
       message: "Cart data found",
-      cart: cartData,
+      cart: cartData.books,
     });
   } catch (error) {
     console.error("Error fetching cart data:", error.message);
