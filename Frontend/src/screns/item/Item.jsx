@@ -74,7 +74,7 @@ const Item = () => {
       };
       const responce = await JWTAxios.post("/cart/addtocart", cartData);
       if (responce.data.status) {
-        toast.success("Book added to cart successfully", {
+        toast.success(responce.data.message, {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
