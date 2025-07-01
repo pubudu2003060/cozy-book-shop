@@ -104,3 +104,33 @@ export const getCartCount = async (req, res) => {
     });
   }
 };
+
+export const updateItemQuantity = async (req, res) => {
+  try {
+    const { itemId, quantity } = req.body;
+    const cartId = req.user.cartId;
+
+    const cart = await Cart.find({ _id: cartId, "books._id": itemId });
+    if (!cart) {
+      return res.status(404).json({
+        status: false,
+        message: "Cart not found",
+      });
+    }
+
+    const responce = await Cart.findOneAndUpdate(
+      { _id: cartId, "books._id": itemId },
+      { $set: { "books.$.quantity": quantity } },
+      { new: true }
+    );
+
+    console.log(responce);
+
+    res
+      .status(200)
+      .json({ status: true, message: "Item quantity update successfully" });
+  } catch (error) {
+    console.log("Error in updating cart book item quantity:", error.message);
+    res.status(500).json({ status: false, message: "Server error" });
+  }
+};

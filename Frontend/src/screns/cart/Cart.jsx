@@ -64,6 +64,50 @@ const Cart = () => {
     fetchCartData();
   }, []);
 
+  const handleupdate = async (itemId, quantity) => {
+    try {
+      const responce = await JWTAxios.put("cart/updatecartitemquantity", {
+        itemId,
+        quantity,
+      });
+      if (responce.data.status) {
+        toast.success("Update quantity successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      } else {
+        toast.error("Fail Update quantity", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.log("Error Update quantity: ", error.message);
+      toast.error("Error Update quantity", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
   if (loading)
     return (
       <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -175,6 +219,14 @@ const Cart = () => {
                   <p className="text-amber-700 dark:text-amber-200 font-medium">
                     Subtotal: ${(item.bookId.price * item.quantity).toFixed(2)}
                   </p>
+                </div>
+                <div>
+                  <button
+                    onClick={() => handleupdate(item._id, item.quantity)}
+                    className="bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-3 py-1 rounded-md hover:bg-green-800 dark:hover:bg-green-700 text-sm md:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
+                  >
+                    Update
+                  </button>
                 </div>
               </li>
             ))}

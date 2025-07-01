@@ -3,6 +3,7 @@ import {
   addToCart,
   loadCartData,
   getCartCount,
+  updateItemQuantity,
 } from "../controllers/Cart.controler.js";
 import { verifyAccessToken } from "../middleware/JWT.js";
 
@@ -13,5 +14,7 @@ cartRoute.post("/addtocart", verifyAccessToken, addToCart);
 cartRoute.get("/loadcartdata", verifyAccessToken, loadCartData);
 
 cartRoute.get("/getcartsize", verifyAccessToken, getCartCount);
+
+cartRoute.put("/updatecartitemquantity", verifyAccessToken, updateItemQuantity);
 
 export default cartRoute;
