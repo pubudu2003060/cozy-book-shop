@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 export const freeAxios = axios.create({
   baseURL: "http://localhost:5000/api",
   timeout: 10000,
+  validateStatus: function (status) {
+    return status < 400 || (status >= 400 && status < 500);
+  },
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,6 +15,9 @@ export const freeAxios = axios.create({
 export const JWTAxios = axios.create({
   baseURL: "http://localhost:5000/api",
   timeout: 10000,
+  validateStatus: function (status) {
+    return status < 400 || (status >= 400 && status < 500);
+  },
   headers: {
     "Content-Type": "application/json",
   },

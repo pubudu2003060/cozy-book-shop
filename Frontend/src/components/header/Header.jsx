@@ -32,22 +32,6 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchCartSize = async () => {
-      try {
-        const responce = await JWTAxios.get("/cart/getcartsize");
-        if (responce.data.status) {
-          const cartsize = responce.data.length;
-          useDispatch(increaseCountByAmount(cartsize));
-        }
-      } catch (error) {
-        console.log("Error in fetching cart size:", error.message);
-      }
-    };
-
-    fetchCartSize();
-  }, [isLogin]);
-
   return (
     <header className="relative flex items-center justify-between px-4 py-3 bg-white dark:bg-[#1a1611] shadow-md md:px-8 md:py-4">
       <div>
