@@ -3,19 +3,20 @@ import { Link } from "react-router-dom";
 import { freeAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
 import ItemCard from "../../components/card/ItemCard";
+import { useDispatch, useSelector } from "react-redux";
+import { addBooks } from "../../state/book/Bookslice";
 
 const Home = () => {
-  const [featuredBooks, setFeaturedBooks] = useState([]);
+  const featuredBooks = useSelector((state) => state.book.data);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchFeaturedBooks = async () => {
       try {
-        const response = await freeAxios.get("/book/getallbooks", {
-          params: { limit: 3 }, // Fetch only 3 books for featured section
-        });
+        const response = await freeAxios.get("/book/getallbooks");
         if (response.data.status) {
-          setFeaturedBooks(response.data.books);
+          dispatch(addBooks(response.data.books));
         } else {
           toast.error("Failed to fetch featured books", {
             position: "top-center",
@@ -87,7 +88,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredBooks.map((book, index) => (
+            {featuredBooks.slice(0, 9).map((book, index) => (
               <ItemCard item={book} key={index} />
             ))}
           </div>

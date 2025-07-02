@@ -2,47 +2,16 @@ import React, { useEffect, useState } from "react";
 import { freeAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
 import ItemCard from "../../components/card/ItemCard";
+import { useSelector } from "react-redux";
 
 const AllItems = () => {
-  const [items, setItems] = useState([]);
+  const items = useSelector((state) => state.book.data);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const response = await freeAxios.get("/book/getallbooks");
-        if (response.data.status) {
-          setItems(response.data.books);
-        } else {
-          toast.error("Failed to fetch items", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching items:", error);
-        toast.error("Error fetching items", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchItems();
+    setTimeout(() => {
+      setLoading(false);
+    }, 300);
   }, []);
 
   if (loading) {

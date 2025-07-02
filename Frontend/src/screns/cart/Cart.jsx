@@ -3,11 +3,6 @@ import { Link } from "react-router-dom";
 import { JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  decrement,
-  increment,
-  incrementByAmount,
-} from "../../state/book/Bookslice";
 import { Minus, Plus } from "lucide-react";
 import {
   addDatatoCart,
@@ -16,12 +11,10 @@ import {
 } from "../../state/cart/CartSlice";
 
 const Cart = () => {
-  // const [cart, setCart] = useState(null);
   const cart = useSelector((state) => state.cart.data);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const count = useSelector((state) => state.book.value);
   const dispatch = useDispatch();
 
   useEffect(() => {

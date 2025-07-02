@@ -46,3 +46,5 @@ JWTAxios.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+JWTAxios.interceptors.response.use(() => {});

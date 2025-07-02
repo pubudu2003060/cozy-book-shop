@@ -1,20 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+  data: [],
+};
+
 const bookSlice = createSlice({
   name: "book",
-  initialState: { value: 0 },
+  initialState: initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    addBooks: (state, action) => {
+      state.data = action.payload;
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = bookSlice.actions;
+export const { addBooks } = bookSlice.actions;
 export default bookSlice.reducer;

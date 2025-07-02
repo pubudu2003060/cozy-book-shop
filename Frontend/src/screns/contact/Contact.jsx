@@ -25,14 +25,14 @@ const Contact = () => {
       setError("Invalid email format");
       return;
     }
-    // Simulate form submission (replace with actual API call)
+
     setSuccess(true);
     setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSuccess(false), 5000); // Clear success message after 5s
+    setTimeout(() => setSuccess(false), 5000);
   };
 
   return (
-    <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <main className="min-h-[calc(100vh-80px)] pb-10 bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
         <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100 mb-6 text-center">
           Contact Us
