@@ -17,12 +17,16 @@ export const handleGoogleLogin = async (req, res) => {
     const accessToken = signAccessToken(user._id.toString());
     const refreshToken = signRefreshToken(user._id.toString());
 
-    res.status(201).json({
-      status: true,
-      message: "User created successfully",
-      accessToken,
-      refreshToken,
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     });
+
+    res.redirect(
+      `http://localhost:5173/auth/success?accessToken=${accessToken}`
+    );
   } catch (error) {
     console.log("Google login error: " + error.message);
     res.status(500).json({

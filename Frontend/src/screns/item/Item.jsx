@@ -10,7 +10,6 @@ const Item = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  console.log("Item ID:", id);
   const [book, setBook] = useState(null);
   const [error, setError] = useState(null);
 
