@@ -5,7 +5,7 @@ import {
   getCartCount,
   updateItemQuantity,
 } from "../controllers/Cart.controler.js";
-import { verifyAccessToken } from "../middleware/JWT.js";
+import { verifyAccessToken } from "../middleware/Auth.js";
 
 const cartRoute = express.Router();
 

@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
 import { verifyAccess, verifyRefresh } from "../utils/Tokens.js";
 

@@ -5,6 +5,9 @@ import { connectDb } from "./configs/DBConnection.js";
 import userRouter from "./rotues/User.route.js";
 import bookRoute from "./rotues/Book.route.js";
 import cartRoute from "./rotues/Cart.route.js";
+import cookieParser from "cookie-parser";
+import passport from "./configs/Passport.js";
+import session from "express-session";
 
 const app = express();
 dotenv.config();
@@ -20,11 +23,33 @@ app.use(
 
 app.use(express.json());
 
+app.use(cookieParser());
+
+app.use(
+  session({
+    secret: "throwaway-passport-bridge",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.COOKIE_SECURE === "true",
+      sameSite: "lax",
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/api/user", userRouter);
 
 app.use("/api/book", bookRoute);
 
 app.use("/api/cart", cartRoute);
+
+app.use((err, _req, res, _next) => {
+  console.error(err);
+  res.status(500).json({ error: "Server error" });
+});
 
 app.listen(PORT, async () => {
   await connectDb();
