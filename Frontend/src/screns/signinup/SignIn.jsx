@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { freeAxios, JWTAxios } from "../../api/Axios";
-import { useNavigate } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { logedIn } from "../../state/user/UserSlice";
 import { increaseCountByAmount } from "../../state/cart/CartSlice";
+import googleimage from "../../assets/icons8-google-48.png";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -88,16 +88,17 @@ const SignIn = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:3000/auth/google";
+  };
+
   return (
     <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md bg-neutral-50 dark:bg-[#2d251f] p-6 rounded-lg shadow-md border border-neutral-200 dark:border-[#3d342a]">
         <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100 mb-6 text-center">
           Sign In
         </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="bg-neutral-50 dark:bg-[#2d251f] p-6 rounded-lg shadow-md border border-neutral-200 dark:border-[#3d342a]"
-        >
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -142,6 +143,19 @@ const SignIn = () => {
             Sign In
           </button>
         </form>
+
+        <div className="mt-5">
+          <p className=" text-amber-700 dark:text-amber-200">
+            I dont have an accoutn.<Link to="/signup">Sign up</Link>
+          </p>
+
+          <p className="mt-5">
+            Sign in with Google
+            <button onClick={handleGoogleLogin}>
+              <img src={googleimage}></img>
+            </button>
+          </p>
+        </div>
       </div>
     </main>
   );
