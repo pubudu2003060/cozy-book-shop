@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 export const freeAxios = axios.create({
   baseURL: "http://localhost:5000/api",
-  timeout: 10000,
+  timeout: 100000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,7 +12,7 @@ export const freeAxios = axios.create({
 
 export const JWTAxios = axios.create({
   baseURL: "http://localhost:5000/api",
-  timeout: 10000,
+  timeout: 100000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -53,7 +53,7 @@ JWTAxios.interceptors.response.use(
       } catch (error) {
         console.log(error);
         localStorage.removeItem("accessToken");
-        //  window.location.href = "/signin";
+        window.location.href = "/signin";
         return Promise.reject(error);
       }
     }

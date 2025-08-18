@@ -13,11 +13,9 @@ const DarkmoodToggler = () => {
     if (isDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
-      console.log("Dark mode enabled");
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
-      console.log("Dark mode disabled");
     }
   }, [isDark]);
 

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logedOut } from "../../state/user/UserSlice";
-import { resetCartCount } from "../../state/cart/CartSlice";
+import { removeDatafromCart, resetCartCount } from "../../state/cart/CartSlice";
 
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
@@ -23,6 +23,7 @@ const Header = () => {
     if (isLogin) {
       dispatch(logedOut());
       dispatch(resetCartCount());
+      dispatch(removeDatafromCart());
       localStorage.removeItem("accessToken");
       navigate("/");
     }

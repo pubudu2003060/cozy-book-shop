@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { freeAxios } from "../../api/Axios";
-import { toast } from "react-toastify";
 import ItemCard from "../../components/card/ItemCard";
 import { useSelector } from "react-redux";
 

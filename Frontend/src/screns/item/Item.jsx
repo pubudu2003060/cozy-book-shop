@@ -98,8 +98,8 @@ const Item = () => {
         });
       }
     } catch (error) {
-      console.error("Error adding book to cart:", error);
-      toast.error("Error to add book to cart", {
+      console.log(error);
+      toast.error(error.response.data.message, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

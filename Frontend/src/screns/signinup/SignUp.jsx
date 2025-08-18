@@ -114,28 +114,32 @@ const SignUp = () => {
   const tokenValue = searchParams.get("accessToken");
 
   useEffect(() => {
-    if (!paramValueStatus) return;
+    const googleSignin = () => {
+      if (!paramValueStatus) return;
 
-    if (paramValueStatus === "fail") {
-      toast.error("User signed in failed", {
-        position: "top-center",
-        autoClose: 5000,
-        theme: "dark",
-      });
-      navigate("/signin", { replace: true });
-    }
+      if (paramValueStatus === "fail") {
+        toast.error("User signed in failed", {
+          position: "top-center",
+          autoClose: 5000,
+          theme: "dark",
+        });
+        navigate("/signin", { replace: true });
+      }
 
-    if (paramValueStatus === "success" && tokenValue) {
-      localStorage.setItem("accessToken", tokenValue);
-      toast.success("User signed in successfully", {
-        position: "top-center",
-        autoClose: 5000,
-        theme: "dark",
-      });
-      getCartLength();
-      dispatch(logedIn());
-      navigate("/", { replace: true });
-    }
+      if (paramValueStatus === "success" && tokenValue) {
+        localStorage.setItem("accessToken", tokenValue);
+        toast.success("User signed in successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          theme: "dark",
+        });
+        getCartLength();
+        dispatch(logedIn());
+        navigate("/", { replace: true });
+      }
+    };
+
+    googleSignin();
   }, [paramValueStatus, tokenValue]);
 
   return (

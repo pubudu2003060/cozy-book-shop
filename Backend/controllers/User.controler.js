@@ -84,7 +84,7 @@ export const signinUser = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.status(201).json({
+    res.status(200).json({
       status: true,
       message: "User signIn successfully",
       accessToken,

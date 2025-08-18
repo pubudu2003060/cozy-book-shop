@@ -21,6 +21,9 @@ const CartSCice = createSlice({
     addDatatoCart: (state, action) => {
       state.data = action.payload;
     },
+    removeDatafromCart: (state, action) => {
+      state.data = [];
+    },
     increaseCartItemAmountByid: (state, action) => {
       state.data = state.data.map((item) =>
         item.bookId._id === action.payload
@@ -45,5 +48,6 @@ export const {
   addDatatoCart,
   increaseCartItemAmountByid,
   decreaseCartItemAmountByid,
+  removeDatafromCart,
 } = CartSCice.actions;
 export default CartSCice.reducer;
