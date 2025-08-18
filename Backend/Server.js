@@ -8,6 +8,7 @@ import cartRoute from "./rotues/Cart.route.js";
 import cookieParser from "cookie-parser";
 import passport from "./configs/Passport.js";
 import session from "express-session";
+import emailRouter from "./rotues/Email.route.js";
 
 const app = express();
 dotenv.config();
@@ -45,6 +46,8 @@ app.use("/api/user", userRouter);
 app.use("/api/book", bookRoute);
 
 app.use("/api/cart", cartRoute);
+
+app.use("/api/email", emailRouter);
 
 app.use((err, _req, res, _next) => {
   console.error(err);

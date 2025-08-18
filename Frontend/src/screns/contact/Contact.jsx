@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { freeAxios } from "../../api/Axios";
 
 const Contact = () => {
   const [form, setForm] = useState({
@@ -15,7 +16,7 @@ const Contact = () => {
     setError(null);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       setError("All fields are required");
@@ -26,9 +27,24 @@ const Contact = () => {
       return;
     }
 
-    setSuccess(true);
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSuccess(false), 5000);
+    try {
+      const response = await freeAxios.post(
+        "http://localhost:5000/api/email/sendemail",
+        form
+      );
+
+      const data = response.data;
+      if (data.success) {
+        setSuccess(true);
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setSuccess(false), 5000);
+      } else {
+        setError("Failed to send message, try again later.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Error sending message.");
+    }
   };
 
   return (

@@ -181,15 +181,17 @@ const SignIn = () => {
 
         <div className="mt-5">
           <p className=" text-amber-700 dark:text-amber-200">
-            I dont have an accoutn.<Link to="/signup">Sign up</Link>
+            I dont have an accout.<Link to="/signup">Sign up</Link>
           </p>
+        </div>
 
-          <p className="mt-5">
+        <div className="mt-5 flex items-center justify-center gap-2 p-2">
+          <p className="text-amber-700 dark:text-amber-200">
             Sign in with Google
-            <button onClick={handleGoogleLogin}>
-              <img src={googleimage}></img>
-            </button>
           </p>
+          <button onClick={handleGoogleLogin}>
+            <img src={googleimage} alt="Google Sign In" className="w-6 h-6" />
+          </button>
         </div>
       </div>
     </main>
