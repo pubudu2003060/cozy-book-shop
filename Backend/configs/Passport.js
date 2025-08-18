@@ -31,6 +31,7 @@ passport.use(
         let user = await User.findOne({ googleId: profile.id });
         if (!user && email) {
           user = await User.findOne({ email });
+          if (user) return done(null, null);
         }
 
         if (!user) {
@@ -42,6 +43,7 @@ passport.use(
             name: profile.displayName,
             cartId: newCart._id,
           });
+          return done(null, user);
         }
 
         return done(null, user);

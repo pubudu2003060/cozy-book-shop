@@ -1,5 +1,3 @@
-import User from "../models/User.model.js";
-import bcrypt from "bcryptjs";
 import passport from "../configs/Passport.js";
 import { signAccessToken, signRefreshToken } from "../utils/Tokens.js";
 
@@ -14,6 +12,11 @@ export const googleSigninCallBack = passport.authenticate("google", {
 export const handleGoogleLogin = async (req, res) => {
   try {
     const user = req.user;
+
+    if (!user) {
+      res.redirect(`http://localhost:5173/signin?status=fail`);
+    }
+
     const accessToken = signAccessToken(user._id.toString());
     const refreshToken = signRefreshToken(user._id.toString());
 
@@ -25,20 +28,14 @@ export const handleGoogleLogin = async (req, res) => {
     });
 
     res.redirect(
-      `http://localhost:5173/auth/success?accessToken=${accessToken}`
+      `http://localhost:5173/signin?status=success&&accessToken=${accessToken}`
     );
   } catch (error) {
     console.log("Google login error: " + error.message);
-    res.status(500).json({
-      status: true,
-      message: "Internal server error",
-    });
+    res.redirect(`http://localhost:5173/signin?status=fail`);
   }
 };
 
 export const handleGoogleFailure = async (req, res) => {
-  res.status(500).json({
-    status: true,
-    message: "Google login failed",
-  });
+  res.redirect(`http://localhost:5173/signin?status=fail`);
 };

@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { freeAxios } from "../../api/Axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logedIn } from "../../state/user/UserSlice";
 import googleimage from "../../assets/icons8-google-48.png";
@@ -106,8 +106,37 @@ const SignUp = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href = "http://localhost:5000/api/user/googlesignin";
   };
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const paramValueStatus = searchParams.get("status");
+  const tokenValue = searchParams.get("accessToken");
+
+  useEffect(() => {
+    if (!paramValueStatus) return;
+
+    if (paramValueStatus === "fail") {
+      toast.error("User signed in failed", {
+        position: "top-center",
+        autoClose: 5000,
+        theme: "dark",
+      });
+      navigate("/signin", { replace: true });
+    }
+
+    if (paramValueStatus === "success" && tokenValue) {
+      localStorage.setItem("accessToken", tokenValue);
+      toast.success("User signed in successfully", {
+        position: "top-center",
+        autoClose: 5000,
+        theme: "dark",
+      });
+      getCartLength();
+      dispatch(logedIn());
+      navigate("/", { replace: true });
+    }
+  }, [paramValueStatus, tokenValue]);
 
   return (
     <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
