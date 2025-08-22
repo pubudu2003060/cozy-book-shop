@@ -50,39 +50,43 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] px-4 sm:px-6 lg:px-8 py-8">
+    <main className="min-h-[calc(100vh-80px)] bg-theme px-4 sm:px-6 lg:px-8 py-8">
       {/* Hero Section */}
       <section className="text-center mb-12">
-        <h1 className="text-3xl md:text-4xl font-heading text-neutral-900 dark:text-neutral-100 mb-4">
-          Welcome to Cozy Bookshop
-        </h1>
-        <p className="font-body text-amber-700 dark:text-amber-200 text-lg max-w-2xl mx-auto mb-6">
-          Discover a world of stories in our warm, inviting bookshop. From
-          timeless classics to modern bestsellers, find your next great read and
-          join our community of book lovers.
-        </p>
-        <Link
-          to="/allitems"
-          className="inline-block bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-6 py-3 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
-        >
-          Browse All Books
-        </Link>
+        <div className="bg-theme-neutral rounded-2xl p-8 shadow-lg border border-theme-secondary">
+          <h1 className="text-3xl md:text-4xl font-heading text-theme-primary mb-4 font-bold">
+            Welcome to Cozy Bookshop
+          </h1>
+          <p className="font-body text-theme-secondary text-lg max-w-2xl mx-auto mb-6">
+            Discover a world of stories in our warm, inviting bookshop. From
+            timeless classics to modern bestsellers, find your next great read
+            and join our community of book lovers.
+          </p>
+          <Link
+            to="/allitems"
+            className="inline-block bg-theme-accent text-theme px-6 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary transform hover:scale-105"
+          >
+            Browse All Books
+          </Link>
+        </div>
       </section>
 
       {/* Featured Books Section */}
       <section>
-        <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100 mb-6 text-center">
+        <h2 className="text-2xl md:text-3xl font-heading text-theme-primary mb-6 text-center font-bold">
           Featured Books
         </h2>
         {loading ? (
-          <div className="text-center">
-            <h3 className="text-xl font-body text-neutral-900 dark:text-neutral-100">
-              Loading featured books...
-            </h3>
+          <div className="text-center bg-theme-neutral rounded-lg p-8">
+            <div className="animate-pulse">
+              <h3 className="text-xl font-body text-theme">
+                Loading featured books...
+              </h3>
+            </div>
           </div>
         ) : featuredBooks.length === 0 ? (
-          <div className="text-center">
-            <h3 className="text-xl font-body text-neutral-900 dark:text-neutral-100">
+          <div className="text-center bg-theme-neutral rounded-lg p-8">
+            <h3 className="text-xl font-body text-theme">
               No featured books available
             </h3>
           </div>

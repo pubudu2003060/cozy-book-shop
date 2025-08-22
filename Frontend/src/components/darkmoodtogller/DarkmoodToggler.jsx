@@ -29,7 +29,7 @@ const DarkmoodToggler = () => {
   return (
     <button
       onClick={handleTheme}
-      className="p-2 rounded-md text-text dark:text-textdark hover:bg-accent dark:hover:bg-accentdark hover:text-textdark dark:hover:text-text transition-colors focus:outline-none focus:ring-2 focus:ring-secondary dark:focus:ring-secondarydark"
+      className="p-2 rounded-md text-theme hover:bg-theme-accent hover:text-theme-neutral transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDark ? <Moon size={20} /> : <Sun size={20} />}

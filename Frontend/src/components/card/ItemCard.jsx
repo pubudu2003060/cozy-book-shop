@@ -3,25 +3,25 @@ import { Link } from "react-router-dom";
 
 const ItemCard = ({ item }) => {
   return (
-    <div className="bg-neutral-50 dark:bg-[#2d251f] rounded-lg shadow-md border border-neutral-200 dark:border-[#3d342a] overflow-hidden">
+    <div className="bg-theme-neutral rounded-lg shadow-lg border border-theme-secondary overflow-hidden hover:shadow-xl hover:scale-105 transition-all duration-300">
       <img
         src={item.image}
         alt={item.title}
         className="w-full h-48 object-cover"
       />
       <div className="p-4">
-        <h3 className="text-lg font-heading text-neutral-900 dark:text-neutral-100 mb-2">
+        <h3 className="text-lg font-heading text-theme-primary mb-2 font-bold">
           {item.title}
         </h3>
-        <p className="font-body text-amber-700 dark:text-amber-200 text-sm mb-3 line-clamp-3">
+        <p className="font-body text-theme-secondary text-sm mb-3 line-clamp-3">
           {item.description}
         </p>
-        <p className="font-body text-neutral-900 dark:text-neutral-100 font-medium mb-4">
-          <strong>Price:</strong> ${item.price}
+        <p className="font-body text-theme font-medium mb-4">
+          <strong className="text-theme-accent">Price:</strong> ${item.price}
         </p>
         <Link to={`/item/${item.id}`}>
-          <button className="w-full bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700">
-            Show
+          <button className="w-full bg-theme-primary text-theme-neutral px-4 py-2 rounded-md hover:bg-theme-accent hover:text-theme font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary transform hover:scale-105">
+            Show Details
           </button>
         </Link>
       </div>

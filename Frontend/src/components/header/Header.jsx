@@ -30,11 +30,11 @@ const Header = () => {
   };
 
   return (
-    <header className="relative flex items-center justify-between px-4 py-3 bg-white dark:bg-[#1a1611] shadow-md md:px-8 md:py-4">
+    <header className="relative flex items-center justify-between px-4 py-3 bg-theme shadow-lg md:px-8 md:py-4 border-b border-theme-neutral">
       <div>
         <Link
           to="/"
-          className="font-heading text-2xl md:text-3xl text-amber-900 dark:text-amber-700"
+          className="font-heading text-2xl md:text-3xl text-theme-primary font-bold"
         >
           Bookshop
         </Link>
@@ -45,7 +45,7 @@ const Header = () => {
           <li>
             <Link
               to="/"
-              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+              className="font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
             >
               Home
             </Link>
@@ -53,7 +53,7 @@ const Header = () => {
           <li>
             <Link
               to="/allitems"
-              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+              className="font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
             >
               All Items
             </Link>
@@ -61,7 +61,7 @@ const Header = () => {
           <li>
             <Link
               to="/about"
-              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+              className="font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
             >
               About
             </Link>
@@ -69,7 +69,7 @@ const Header = () => {
           <li>
             <Link
               to="/contact"
-              className="font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+              className="font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
             >
               Contact
             </Link>
@@ -82,16 +82,16 @@ const Header = () => {
           <>
             <button
               onClick={handleLogout}
-              className="bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-3 py-1 rounded-md hover:bg-green-800 dark:hover:bg-green-700 text-sm md:text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
+              className="bg-theme-primary text-theme-neutral px-3 py-1 rounded-md hover:bg-theme-secondary font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
             >
               Log Out
             </button>
 
             <Link
               to="/cart"
-              className="relative font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+              className="relative font-body text-theme hover:text-theme-accent transition-colors duration-300"
             >
-              <span className="absolute top-[-15px] right-0 bg-orange-600 dark:bg-orange-500 rounded-2xl h-5 w-5 flex items-center justify-center text-xs text-neutral-100 dark:text-neutral-900">
+              <span className="absolute top-[-15px] right-0 bg-theme-accent text-theme rounded-full h-5 w-5 flex items-center justify-center text-xs font-medium">
                 {cartCount}
               </span>
               <ShoppingCart />
@@ -99,16 +99,15 @@ const Header = () => {
           </>
         ) : (
           <>
-            {" "}
             <Link
               to="/signin"
-              className="hidden md:block font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+              className="hidden md:block font-body text-theme hover:text-theme-accent transition-colors duration-300"
             >
               Sign In
             </Link>
             <Link
               to="/signup"
-              className="hidden md:block font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 text-sm md:text-base"
+              className="hidden md:block font-body text-theme hover:text-theme-accent transition-colors duration-300"
             >
               Sign Up
             </Link>
@@ -121,7 +120,7 @@ const Header = () => {
       {/* Mobile Menu Toggle */}
       <div className="md:hidden">
         <button
-          className="text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 focus:outline-none"
+          className="text-theme hover:text-theme-accent focus:outline-none transition-colors duration-300"
           aria-label={
             isMobileMenuOpen ? "Close mobile menu" : "Open mobile menu"
           }
@@ -150,12 +149,12 @@ const Header = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <nav className="md:hidden absolute top-full left-0 w-full bg-neutral-50 dark:bg-[#2d251f] shadow-md">
+        <nav className="md:hidden absolute top-full left-0 w-full bg-theme-neutral shadow-lg border-t border-theme-secondary z-50">
           <ul className="flex flex-col items-center py-4">
             <li className="w-full">
               <Link
                 to="/"
-                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
                 onClick={toggleMobileMenu}
               >
                 Home
@@ -164,7 +163,7 @@ const Header = () => {
             <li className="w-full">
               <Link
                 to="/allitems"
-                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
                 onClick={toggleMobileMenu}
               >
                 All Items
@@ -173,7 +172,7 @@ const Header = () => {
             <li className="w-full">
               <Link
                 to="/about"
-                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
                 onClick={toggleMobileMenu}
               >
                 About
@@ -182,7 +181,7 @@ const Header = () => {
             <li className="w-full">
               <Link
                 to="/contact"
-                className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
                 onClick={toggleMobileMenu}
               >
                 Contact
@@ -195,17 +194,16 @@ const Header = () => {
                 <li className="w-full">
                   <Link
                     to="/signin"
-                    className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                    className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
                     onClick={toggleMobileMenu}
                   >
                     Sign In
                   </Link>
                 </li>
-
                 <li className="w-full">
                   <Link
                     to="/signup"
-                    className="block py-2 text-center font-body text-neutral-900 dark:text-neutral-100 hover:text-orange-600 dark:hover:text-orange-500 font-medium transition-colors"
+                    className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
                     onClick={toggleMobileMenu}
                   >
                     Sign Up
