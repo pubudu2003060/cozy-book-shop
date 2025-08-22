@@ -42,11 +42,14 @@ const Home = () => {
           theme: "dark",
         });
       } finally {
-        setLoading(false);
       }
     };
 
-    fetchFeaturedBooks();
+    if (featuredBooks.length === 0) {
+      fetchFeaturedBooks();
+    }
+
+    setLoading(false);
   }, []);
 
   return (

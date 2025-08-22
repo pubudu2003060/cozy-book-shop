@@ -1,15 +1,53 @@
 import React, { useEffect, useState } from "react";
 import ItemCard from "../../components/card/ItemCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { freeAxios } from "../../api/Axios";
+import { toast } from "react-toastify";
+import { addBooks } from "../../state/book/Bookslice";
 
 const AllItems = () => {
   const items = useSelector((state) => state.book.data);
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
+    const fetchFeaturedBooks = async () => {
+      try {
+        const response = await freeAxios.get("/book/getallbooks");
+        if (response.data.status) {
+          dispatch(addBooks(response.data.books));
+        } else {
+          toast.error("Failed to fetch featured books", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching featured books:", error);
+        toast.error("Error fetching featured books", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    };
+
+    if (items.length === 0) {
+      fetchFeaturedBooks();
+    }
+
+    setLoading(false);
   }, []);
 
   if (loading) {

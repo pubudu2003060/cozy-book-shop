@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-2xl bg-neutral-50 dark:bg-[#2d251f] p-6 rounded-lg shadow-md border border-neutral-200 dark:border-[#3d342a]">
-        <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100 mb-6 text-center">
+    <main className="min-h-[calc(100vh-80px)] bg-theme flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-2xl bg-theme-neutral p-6 rounded-lg shadow-lg border border-theme-secondary">
+        <h2 className="text-2xl md:text-3xl font-heading text-theme-primary mb-6 text-center font-bold">
           About Cozy Bookshop
         </h2>
-        <div className="space-y-4 font-body text-amber-700 dark:text-amber-200">
+        <div className="space-y-4 font-body text-theme">
           <p>
             Welcome to Cozy Bookshop, a haven for book lovers since 2010.
             Nestled in the heart of our community, we are dedicated to fostering
@@ -38,7 +38,7 @@ const About = () => {
         <div className="mt-6 text-center">
           <Link
             to="/allitems"
-            className="inline-block bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
+            className="inline-block bg-theme-accent text-theme px-6 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary transform hover:scale-105"
           >
             Browse Our Books
           </Link>

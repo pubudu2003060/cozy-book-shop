@@ -48,53 +48,58 @@ const Contact = () => {
   };
 
   return (
-    <main className="min-h-[calc(100vh-80px)] pb-10 bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
+    <main className="min-h-[calc(100vh-80px)] pb-10 bg-theme flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md">
-        <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100 mb-6 text-center">
+        <h2 className="text-2xl md:text-3xl font-heading text-theme-primary mb-6 text-center font-bold">
           Contact Us
         </h2>
-        <div className="bg-neutral-50 dark:bg-[#2d251f] p-6 rounded-lg shadow-md border border-neutral-200 dark:border-[#3d342a]">
-          <div className="space-y-4 font-body text-amber-700 dark:text-amber-200 mb-6">
+        <div className="bg-theme-neutral p-6 rounded-lg shadow-lg border border-theme-secondary">
+          <div className="space-y-4 font-body text-theme mb-6">
             <p>
-              We’d love to hear from you! Whether you have questions about our
+              We'd love to hear from you! Whether you have questions about our
               books, need help with an order, or want to share your love for
               reading, feel free to reach out.
             </p>
-            <p>
-              <strong>Address:</strong> 123 Story Lane, Booktown, BT 12345
-            </p>
-            <p>
-              <strong>Email:</strong>{" "}
-              <a
-                href="mailto:info@cozybookshop.com"
-                className="text-orange-600 dark:text-orange-500 hover:underline"
-              >
-                info@cozybookshop.com
-              </a>
-            </p>
-            <p>
-              <strong>Phone:</strong>{" "}
-              <a
-                href="tel:+1234567890"
-                className="text-orange-600 dark:text-orange-500 hover:underline"
-              >
-                (123) 456-7890
-              </a>
-            </p>
+            <div className="space-y-2">
+              <p>
+                <strong className="text-theme-primary">Address:</strong> 123
+                Story Lane, Booktown, BT 12345
+              </p>
+              <p>
+                <strong className="text-theme-primary">Email:</strong>{" "}
+                <a
+                  href="mailto:info@cozybookshop.com"
+                  className="text-theme-accent hover:text-theme-primary transition-colors duration-300 hover:underline"
+                >
+                  info@cozybookshop.com
+                </a>
+              </p>
+              <p>
+                <strong className="text-theme-primary">Phone:</strong>{" "}
+                <a
+                  href="tel:+1234567890"
+                  className="text-theme-accent hover:text-theme-primary transition-colors duration-300 hover:underline"
+                >
+                  (123) 456-7890
+                </a>
+              </p>
+            </div>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <p className="text-red-500 font-body mb-4 text-center">{error}</p>
+              <p className="text-red-500 font-body text-center bg-red-50 dark:bg-red-900/20 p-3 rounded-md border border-red-200 dark:border-red-800">
+                {error}
+              </p>
             )}
             {success && (
-              <p className="text-green-500 font-body mb-4 text-center">
+              <p className="text-green-600 dark:text-green-400 font-body text-center bg-green-50 dark:bg-green-900/20 p-3 rounded-md border border-green-200 dark:border-green-800">
                 Message sent successfully!
               </p>
             )}
-            <div className="mb-4">
+            <div>
               <label
                 htmlFor="name"
-                className="block font-body text-amber-700 dark:text-amber-200 mb-2"
+                className="block font-body text-theme-secondary mb-2 font-medium"
               >
                 Name
               </label>
@@ -105,14 +110,14 @@ const Contact = () => {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-white dark:bg-[#1a1611] text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-[#3d342a] rounded-md focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700 transition-colors"
+                className="w-full px-4 py-2 bg-theme text-theme border border-theme-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-theme-primary transition-all duration-300"
                 placeholder="Enter your name"
               />
             </div>
-            <div className="mb-4">
+            <div>
               <label
                 htmlFor="email"
-                className="block font-body text-amber-700 dark:text-amber-200 mb-2"
+                className="block font-body text-theme-secondary mb-2 font-medium"
               >
                 Email
               </label>
@@ -123,14 +128,14 @@ const Contact = () => {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-white dark:bg-[#1a1611] text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-[#3d342a] rounded-md focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700 transition-colors"
+                className="w-full px-4 py-2 bg-theme text-theme border border-theme-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-theme-primary transition-all duration-300"
                 placeholder="Enter your email"
               />
             </div>
-            <div className="mb-6">
+            <div>
               <label
                 htmlFor="message"
-                className="block font-body text-amber-700 dark:text-amber-200 mb-2"
+                className="block font-body text-theme-secondary mb-2 font-medium"
               >
                 Message
               </label>
@@ -140,14 +145,14 @@ const Contact = () => {
                 value={form.message}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 bg-white dark:bg-[#1a1611] text-neutral-900 dark:text-neutral-100 border border-neutral-200 dark:border-[#3d342a] rounded-md focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700 transition-colors resize-y"
+                className="w-full px-4 py-2 bg-theme text-theme border border-theme-secondary rounded-md focus:outline-none focus:ring-2 focus:ring-theme-primary transition-all duration-300 resize-y"
                 placeholder="Your message"
                 rows="5"
               />
             </div>
             <button
               type="submit"
-              className="w-full bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-4 py-2 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
+              className="w-full bg-theme-accent text-theme px-4 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary transform hover:scale-105"
             >
               Send Message
             </button>
