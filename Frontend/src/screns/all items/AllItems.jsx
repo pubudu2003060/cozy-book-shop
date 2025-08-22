@@ -14,24 +14,33 @@ const AllItems = () => {
 
   if (loading) {
     return (
-      <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100">
-          Loading items...
-        </h2>
+      <main className="min-h-[calc(100vh-80px)] bg-theme flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="bg-theme-neutral p-8 rounded-lg shadow-lg">
+          <div className="animate-pulse">
+            <h2 className="text-2xl md:text-3xl font-heading text-theme-primary font-bold">
+              Loading items...
+            </h2>
+          </div>
+        </div>
       </main>
     );
   }
 
   return (
-    <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] px-4 sm:px-6 lg:px-8 py-8">
-      <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100 mb-6 text-center">
+    <main className="min-h-[calc(100vh-80px)] bg-theme px-4 sm:px-6 lg:px-8 py-8">
+      <h2 className="text-2xl md:text-3xl font-heading text-theme-primary mb-6 text-center font-bold">
         All Books
       </h2>
       {items.length === 0 ? (
         <div className="text-center">
-          <h3 className="text-xl font-body text-neutral-900 dark:text-neutral-100">
-            No items available
-          </h3>
+          <div className="bg-theme-neutral p-8 rounded-lg shadow-lg">
+            <h3 className="text-xl font-body text-theme mb-4">
+              No items available
+            </h3>
+            <p className="text-theme-secondary">
+              Check back later for new additions to our collection.
+            </p>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

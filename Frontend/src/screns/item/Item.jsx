@@ -114,28 +114,40 @@ const Item = () => {
 
   if (error)
     return (
-      <div className="text-red-500 text-center mt-8 text-lg font-semibold">
-        {error}
+      <div className="min-h-screen bg-theme flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="bg-theme-neutral p-8 rounded-lg shadow-lg">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-theme mb-4">
+              Oops! Something went wrong
+            </h2>
+            <p className="text-theme-secondary">{error}</p>
+          </div>
+        </div>
       </div>
     );
+
   if (!book)
     return (
-      <main className="min-h-[calc(100vh-80px)] bg-white dark:bg-[#1a1611] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl md:text-3xl font-heading text-neutral-900 dark:text-neutral-100">
-          Loading item data...
-        </h2>
+      <main className="min-h-[calc(100vh-80px)] bg-theme flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="bg-theme-neutral p-8 rounded-lg shadow-lg">
+          <div className="animate-pulse">
+            <h2 className="text-2xl md:text-3xl font-heading text-theme-primary font-bold">
+              Loading item data...
+            </h2>
+          </div>
+        </div>
       </main>
     );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#1a1611] py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto bg-neutral-50 dark:bg-[#2d251f] rounded-lg shadow-md overflow-hidden">
+    <div className="min-h-screen bg-theme py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto bg-theme-neutral rounded-lg shadow-lg overflow-hidden">
         {/* Header Section */}
-        <div className="p-6 border-b border-neutral-200 dark:border-[#3d342a]">
-          <h2 className="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+        <div className="p-6 border-b border-theme-secondary">
+          <h2 className="text-3xl font-bold text-theme-primary">
             {book.title}
           </h2>
-          <p className="text-sm text-amber-700 dark:text-amber-200 mt-1">
+          <p className="text-sm text-theme-secondary mt-1 font-medium">
             by {book.auther}
           </p>
         </div>
@@ -153,56 +165,65 @@ const Item = () => {
           </div>
 
           {/* Book Details */}
-          <div className="flex-1 space-y-4">
+          <div className="flex-1 space-y-6">
             <div>
-              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+              <h3 className="text-lg font-semibold text-theme-primary mb-2">
                 Description
               </h3>
-              <p className="text-amber-700 dark:text-amber-200">
+              <p className="text-theme-secondary leading-relaxed">
                 {book.description}
               </p>
             </div>
+
             <div>
-              <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
-                Details
+              <h3 className="text-lg font-semibold text-theme-primary mb-3">
+                Book Details
               </h3>
-              <ul className="text-amber-700 dark:text-amber-200 space-y-2">
-                <li>
-                  <span className="font-medium">Author:</span> {book.auther}
+              <ul className="text-theme space-y-2">
+                <li className="flex justify-between">
+                  <span className="text-theme-secondary">Author:</span>
+                  <span className="font-medium">{book.auther}</span>
                 </li>
-                <li>
-                  <span className="font-medium">Published Date:</span>{" "}
-                  {new Date(book.publishedDate).toLocaleDateString()}
+                <li className="flex justify-between">
+                  <span className="text-theme-secondary">Published:</span>
+                  <span className="font-medium">
+                    {new Date(book.publishedDate).toLocaleDateString()}
+                  </span>
                 </li>
-                <li>
-                  <span className="font-medium">ISBN:</span> {book.isbnNo}
+                <li className="flex justify-between">
+                  <span className="text-theme-secondary">ISBN:</span>
+                  <span className="font-medium">{book.isbnNo}</span>
                 </li>
-                <li>
-                  <span className="font-medium">Price:</span> $
-                  {book.price.toFixed(2)}
+                <li className="flex justify-between">
+                  <span className="text-theme-secondary">Available:</span>
+                  <span className="font-medium">{book.quantity} copies</span>
                 </li>
-                <li>
-                  <span className="font-medium">Quantity Available:</span>{" "}
-                  {book.quantity}
+                <li className="flex justify-between items-center pt-2 border-t border-theme-secondary">
+                  <span className="text-theme-secondary text-lg">Price:</span>
+                  <span className="text-2xl font-bold text-theme-accent">
+                    ${book.price.toFixed(2)}
+                  </span>
                 </li>
               </ul>
             </div>
 
-            <button
-              onClick={handleAddToCart}
-              className="inline-block w-full sm:w-auto bg-orange-600 dark:bg-orange-500 text-neutral-100 dark:text-neutral-900 px-6 py-3 rounded-md hover:bg-green-800 dark:hover:bg-green-700 font-medium transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700 text-center"
-              aria-label={`Add ${book.title} to cart`}
-            >
-              Add to Cart
-            </button>
+            <div className="pt-4">
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-theme-accent text-theme px-6 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary transform hover:scale-105"
+                aria-label={`Add ${book.title} to cart`}
+              >
+                Add to Cart - ${book.price.toFixed(2)}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Back Link */}
-        <div className="p-6 border-t border-neutral-200 dark:border-[#3d342a]">
+        <div className="p-6 border-t border-theme-secondary">
           <Link
             to="/allitems"
-            className="text-amber-700 dark:text-amber-200 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-300"
+            className="text-theme-accent hover:text-theme-primary transition-colors duration-300 font-medium"
           >
             ← Back to Shop
           </Link>
