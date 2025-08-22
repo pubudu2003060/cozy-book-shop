@@ -10,6 +10,7 @@ const Contact = () => {
   });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,6 +29,7 @@ const Contact = () => {
     }
 
     try {
+      setSending(true);
       const response = await freeAxios.post(
         "http://localhost:5000/api/email/sendemail",
         form
@@ -41,7 +43,9 @@ const Contact = () => {
       } else {
         setError("Failed to send message, try again later.");
       }
+      setSending(false);
     } catch (err) {
+      setSending(fal);
       console.error(err);
       setError("Error sending message.");
     }
@@ -153,8 +157,9 @@ const Contact = () => {
             <button
               type="submit"
               className="w-full bg-theme-accent text-theme px-4 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary transform hover:scale-105"
+              disabled={sending}
             >
-              Send Message
+              {sending ? "Sending" : "Send Message"}
             </button>
           </form>
         </div>

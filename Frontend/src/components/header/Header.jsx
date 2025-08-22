@@ -9,10 +9,8 @@ import { removeDatafromCart, resetCartCount } from "../../state/cart/CartSlice";
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
   const dispatch = useDispatch();
-
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartCount = useSelector((state) => state.cart.itemCount);
-
   const navigate = useNavigate();
 
   const toggleMobileMenu = () => {

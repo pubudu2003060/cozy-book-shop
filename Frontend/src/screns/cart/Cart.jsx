@@ -22,7 +22,6 @@ const Cart = () => {
       try {
         const response = await JWTAxios.get("/cart/loadcartdata");
         if (response.data.status) {
-          console.log(response.data.cart);
           dispatch(addDatatoCart(response.data.cart));
         } else {
           setError(response.data.message);

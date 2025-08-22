@@ -72,9 +72,6 @@ const Footer = () => {
                 Subscribe
               </button>
             </div>
-            <p className="text-sm font-body text-theme-secondary mt-2">
-              Newsletter signup is disabled in this demo.
-            </p>
           </div>
 
           {/* Social Media & Contact */}

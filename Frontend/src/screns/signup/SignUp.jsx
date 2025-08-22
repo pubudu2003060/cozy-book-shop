@@ -26,6 +26,7 @@ const SignUp = () => {
     try {
       const responce = await JWTAxios.get("/cart/getcartsize");
       if (responce.data.status) {
+        console.log(responce.data.length);
         dispatch(increaseCountByAmount(responce.data.length));
       } else {
       }
