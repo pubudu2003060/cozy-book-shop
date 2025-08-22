@@ -28,6 +28,7 @@ export const getAllBooks = async (req, res) => {
       books: returnbookset,
     });
   } catch (error) {
+    console.error("Error in get all books: ", error);
     res.status(500).json({
       status: false,
       message: "Error fetching books",
@@ -74,6 +75,7 @@ export const getBookById = async (req, res) => {
       book: returnBook,
     });
   } catch (error) {
+    console.error("Error in get book by id: ", error);
     res.status(500).json({
       status: false,
       message: "Error fetching book",

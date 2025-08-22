@@ -52,7 +52,7 @@ const SignUp = () => {
     }
 
     try {
-      const responce = await freeAxios.post("/user/signup", {
+      const responce = await freeAxios.post("/auth/signup", {
         name: form.name,
         email: form.email,
         password: form.password,
@@ -108,7 +108,7 @@ const SignUp = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5000/api/user/googlesignin";
+    window.location.href = "http://localhost:5000/api/auth/googlesignin";
   };
 
   const [searchParams, setSearchParams] = useSearchParams();

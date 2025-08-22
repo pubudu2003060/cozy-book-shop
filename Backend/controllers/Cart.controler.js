@@ -124,8 +124,6 @@ export const updateItemQuantity = async (req, res) => {
       { new: true }
     );
 
-    console.log(responce);
-
     res
       .status(200)
       .json({ status: true, message: "Item quantity update successfully" });

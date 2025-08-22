@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { connectDb } from "./configs/DBConnection.js";
-import userRouter from "./rotues/User.route.js";
+import userRouter from "./rotues/Auth.route.js";
 import bookRoute from "./rotues/Book.route.js";
 import cartRoute from "./rotues/Cart.route.js";
 import cookieParser from "cookie-parser";
@@ -41,7 +41,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api/user", userRouter);
+app.use("/api/auth", userRouter);
 
 app.use("/api/book", bookRoute);
 

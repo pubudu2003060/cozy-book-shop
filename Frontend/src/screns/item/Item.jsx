@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { JWTAxios } from "../../api/Axios";
+import { freeAxios, JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { increaseCountByOne } from "../../state/cart/CartSlice";
@@ -16,41 +16,14 @@ const Item = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!isLogin) {
-      toast.error("Please login to see book details", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      navigate("/signin");
-    } else {
-      const fetchBook = async () => {
-        try {
-          const response = await JWTAxios.get(`/book/getbookbyid/${id}`);
-          if (response.data.status) {
-            setBook(response.data.book);
-          } else {
-            setError(response.data.message);
-            toast.error(response.data.message, {
-              position: "top-center",
-              autoClose: 5000,
-              hideProgressBar: false,
-              closeOnClick: false,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
-          }
-        } catch (err) {
-          setError("Failed to fetch book data");
-          console.error(err);
-          toast.error("Error fetching book data", {
+    const fetchBook = async () => {
+      try {
+        const response = await freeAxios.get(`/book/getbookbyid/${id}`);
+        if (response.data.status) {
+          setBook(response.data.book);
+        } else {
+          setError(response.data.message);
+          toast.error(response.data.message, {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -61,9 +34,23 @@ const Item = () => {
             theme: "dark",
           });
         }
-      };
-      fetchBook();
-    }
+      } catch (err) {
+        setError("Failed to fetch book data");
+        console.error(err);
+        toast.error("Error fetching book data", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    };
+
+    fetchBook();
   }, [id, isLogin, navigate]);
 
   const handleAddToCart = async () => {

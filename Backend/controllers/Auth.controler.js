@@ -1,8 +1,47 @@
+import passport from "../configs/Passport.js";
+import { signAccessToken, signRefreshToken } from "../utils/Tokens.js";
 import User from "../models/User.model.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import Cart from "../models/Cart.model.js";
-import { signAccessToken, signRefreshToken } from "../utils/Tokens.js";
+
+export const googleSignin = passport.authenticate("google", {
+  scope: ["profile", "email"],
+});
+
+export const googleSigninCallBack = passport.authenticate("google", {
+  failureRedirect: "/api/auth/googlesignin/failure",
+});
+
+export const handleGoogleLogin = async (req, res) => {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      res.redirect(`http://localhost:5173/signin?status=fail`);
+    }
+
+    const accessToken = signAccessToken(user._id.toString());
+    const refreshToken = signRefreshToken(user._id.toString());
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.redirect(
+      `http://localhost:5173/signin?status=success&&accessToken=${accessToken}`
+    );
+  } catch (error) {
+    console.log("Google login error: " + error.message);
+    res.redirect(`http://localhost:5173/signin?status=fail`);
+  }
+};
+
+export const handleGoogleFailure = async (req, res) => {
+  res.redirect(`http://localhost:5173/signin?status=fail`);
+};
 
 export const signupUser = async (req, res) => {
   try {
@@ -64,10 +103,7 @@ export const signinUser = async (req, res) => {
         .json({ status: false, message: "User dont exists" });
     }
 
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      existingUSer.password
-    );
+    const isPasswordValid = bcrypt.compare(password, existingUSer.password);
 
     if (!isPasswordValid) {
       res.status(400).json({ status: false, message: "Invalid password" });

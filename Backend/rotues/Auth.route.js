@@ -3,13 +3,11 @@ import {
   signupUser,
   signinUser,
   refreshToken,
-} from "../controllers/User.controler.js";
-import {
   googleSignin,
   googleSigninCallBack,
   handleGoogleFailure,
   handleGoogleLogin,
-} from "../controllers/GoogleAuth.controler.js";
+} from "../controllers/Auth.controler.js";
 import { verifyAccessToken, verifyRefreshToken } from "../middleware/auth.js";
 
 const userRouter = express.Router();
