@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./screns/home/Home";
 import SignIn from "./screns/signin/SignIn";
@@ -26,6 +26,8 @@ const App = () => {
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
           </Route>
+
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
 
