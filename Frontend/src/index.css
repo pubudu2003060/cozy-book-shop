@@ -1,2 +1,15 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: oklch(0.35 0.15 264);
+  --color-primarydark: oklch(0.55 0.15 264);
+  --color-secondary: oklch(0.55 0.03 256);
+  --color-secondarydark: oklch(0.7 0.03 256);
+  --color-accent: oklch(0.75 0.17 85);
+  --color-accentdark: oklch(0.8 0.17 85);
+  --color-neutral: oklch(0.95 0.01 280);
+  --color-neutraldark: oklch(0.25 0.02 280);
+  --color-text: oklch(0.2 0.03 260);
+  --color-textdark: oklch(0.9 0.01 260);
+}

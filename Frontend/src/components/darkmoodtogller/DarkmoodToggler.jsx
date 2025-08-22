@@ -2,27 +2,34 @@ import React, { useState, useEffect } from "react";
 import { Sun, Moon } from "lucide-react";
 
 const DarkmoodToggler = () => {
-  const [isDark, setIsDark] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    return savedTheme
-      ? savedTheme === "dark"
-      : document.documentElement.classList.contains("dark");
-  });
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    if (isDark) {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme && savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+  }, []);
+
+  const handleTheme = () => {
+    if (!isDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
+      setIsDark(true);
     } else {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
+      setIsDark(false);
     }
-  }, [isDark]);
+  };
 
   return (
     <button
-      onClick={() => setIsDark(!isDark)}
-      className="p-2 rounded-md text-neutral-900 dark:text-neutral-100 hover:bg-orange-600 dark:hover:bg-orange-500 hover:text-neutral-100 dark:hover:text-neutral-900 transition-colors focus:outline-none focus:ring-2 focus:ring-green-800 dark:focus:ring-green-700"
+      onClick={handleTheme}
+      className="p-2 rounded-md text-text dark:text-textdark hover:bg-accent dark:hover:bg-accentdark hover:text-textdark dark:hover:text-text transition-colors focus:outline-none focus:ring-2 focus:ring-secondary dark:focus:ring-secondarydark"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
       {isDark ? <Moon size={20} /> : <Sun size={20} />}
