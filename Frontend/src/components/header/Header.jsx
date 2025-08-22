@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
 import { ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { logedOut } from "../../state/user/UserSlice";
-import { removeDatafromCart, resetCartCount } from "../../state/cart/CartSlice";
+import {
+  increaseCountByAmount,
+  removeDatafromCart,
+  resetCartCount,
+} from "../../state/cart/CartSlice";
+import { JWTAxios } from "../../api/Axios";
 
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
@@ -17,6 +22,19 @@ const Header = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const getCartLength = async () => {
+    try {
+      const responce = await JWTAxios.get("/cart/getcartsize");
+      if (responce.data.status) {
+        console.log(responce.data.length);
+        dispatch(increaseCountByAmount(responce.data.length));
+      } else {
+      }
+    } catch (error) {
+      console.log("Error in get cart size: ", error.message);
+    }
+  };
+
   const handleLogout = () => {
     if (isLogin) {
       dispatch(logedOut());
@@ -26,6 +44,14 @@ const Header = () => {
       navigate("/");
     }
   };
+
+  useEffect(() => {
+    if (isLogin) {
+      getCartLength();
+    } else {
+      dispatch(resetCartCount());
+    }
+  }, [isLogin]);
 
   return (
     <header className="relative flex items-center justify-between px-4 py-3 bg-theme shadow-lg md:px-8 md:py-4 border-b border-theme-neutral">

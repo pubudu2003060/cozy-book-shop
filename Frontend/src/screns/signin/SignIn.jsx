@@ -4,7 +4,6 @@ import { freeAxios, JWTAxios } from "../../api/Axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logedIn } from "../../state/user/UserSlice";
-import { increaseCountByAmount } from "../../state/cart/CartSlice";
 import googleimage from "../../assets/icons8-google-48.png";
 
 const SignIn = () => {
@@ -18,19 +17,6 @@ const SignIn = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const getCartLength = async () => {
-    try {
-      const responce = await JWTAxios.get("/cart/getcartsize");
-      if (responce.data.status) {
-        console.log(responce.data.length);
-        dispatch(increaseCountByAmount(responce.data.length));
-      } else {
-      }
-    } catch (error) {
-      console.log("Error in get cart size: ", error.message);
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -59,7 +45,7 @@ const SignIn = () => {
           email: "",
           password: "",
         });
-        getCartLength();
+
         dispatch(logedIn());
         navigate("/");
       } else {
@@ -117,7 +103,7 @@ const SignIn = () => {
           autoClose: 5000,
           theme: "dark",
         });
-        getCartLength();
+
         dispatch(logedIn());
         navigate("/", { replace: true });
       }

@@ -10,22 +10,22 @@ import {
 } from "../controllers/Auth.controler.js";
 import { verifyAccessToken, verifyRefreshToken } from "../middleware/auth.js";
 
-const userRouter = express.Router();
+const authRouter = express.Router();
 
-userRouter.post("/signup", signupUser);
+authRouter.post("/signup", signupUser);
 
-userRouter.post("/signin", signinUser);
+authRouter.post("/signin", signinUser);
 
-userRouter.get("/googlesignin", googleSignin);
+authRouter.get("/googlesignin", googleSignin);
 
-userRouter.get(
+authRouter.get(
   "/googlesignin/callback",
   googleSigninCallBack,
   handleGoogleLogin
 );
 
-userRouter.get("/googlesignin/failure", handleGoogleFailure);
+authRouter.get("/googlesignin/failure", handleGoogleFailure);
 
-userRouter.get("/refreshaccesstoken", verifyRefreshToken, refreshToken);
+authRouter.get("/refreshaccesstoken", verifyRefreshToken, refreshToken);
 
-export default userRouter;
+export default authRouter;
