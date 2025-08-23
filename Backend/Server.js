@@ -5,16 +5,14 @@ import { connectDb } from "./configs/DBConnection.js";
 import bookRoute from "./rotues/Book.route.js";
 import cartRoute from "./rotues/Cart.route.js";
 import cookieParser from "cookie-parser";
-import passport from "./configs/Passport.js";
-import session from "express-session";
 import emailRouter from "./rotues/Email.route.js";
 import userRoute from "./rotues/User.route.js";
 import authRouter from "./rotues/Auth.route.js";
+import startHTTPSServer from "./configs/HttpsServer.js";
 
 const app = express();
-dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+dotenv.config();
 
 app.use(
   cors({
@@ -27,20 +25,7 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(
-  session({
-    secret: "throwaway-passport-bridge",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.COOKIE_SECURE === "true",
-      sameSite: "lax",
-    },
-  })
-);
-
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth", authRouter);
 
@@ -57,7 +42,6 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: "Server error" });
 });
 
-app.listen(PORT, async () => {
-  await connectDb();
-  console.log("Server is running on http://localhost:" + PORT);
-});
+const PORT = process.env.PORT || 5000;
+
+startHTTPSServer(app, PORT, connectDb);

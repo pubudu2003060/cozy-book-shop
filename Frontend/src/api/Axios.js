@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const freeAxios = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://localhost:5000/api",
   timeout: 100000,
   headers: {
     "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export const freeAxios = axios.create({
 });
 
 export const JWTAxios = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://localhost:5000/api",
   timeout: 100000,
   headers: {
     "Content-Type": "application/json",
@@ -20,13 +20,6 @@ export const JWTAxios = axios.create({
 
 JWTAxios.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      window.location.href = "/signin";
-    }
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
     return config;
   },
   (error) => Promise.reject(error)

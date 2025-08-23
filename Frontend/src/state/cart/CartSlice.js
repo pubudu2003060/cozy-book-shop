@@ -50,4 +50,5 @@ export const {
   decreaseCartItemAmountByid,
   removeDatafromCart,
 } = CartSCice.actions;
+
 export default CartSCice.reducer;
