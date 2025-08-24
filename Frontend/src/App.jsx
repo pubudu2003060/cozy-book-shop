@@ -11,12 +11,15 @@ import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { freeAxios } from "./api/Axios";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { logedIn, logedOut } from "./state/user/UserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserData, logedIn, logedOut } from "./state/user/UserSlice";
+import Checkout from "./screns/checkout/Checkout";
+import Profile from "./screns/profile/profile";
 
 const App = () => {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
+  const islogin = useSelector((state) => state.user.isLogedIn);
 
   const handlelogin = async () => {
     try {
@@ -32,7 +35,6 @@ const App = () => {
       );
 
       const userdata = userInfo.data;
-      console.log("User Info:", userdata);
 
       const responce = await freeAxios.post(
         "/auth/login",
@@ -48,8 +50,6 @@ const App = () => {
         }
       );
 
-      console.log("Backend login response:", responce.data);
-
       if (responce.data.status) {
         toast.success("User login successfully", {
           position: "top-center",
@@ -61,10 +61,12 @@ const App = () => {
           progress: undefined,
           theme: "dark",
         });
-        console.log("User ID:", responce.data);
+
         localStorage.setItem("userId", responce.data.id);
         localStorage.setItem("accessToken", token);
         dispatch(logedIn());
+        dispatch(addUserData(responce.data.user));
+        console.log(responce.data.user);
       } else {
         toast.error("User login fail", {
           position: "top-center",
@@ -101,9 +103,6 @@ const App = () => {
       } else {
         handlelogin();
       }
-
-      console.log("Authentication status changed:", isAuthenticated);
-      console.log("loading changed:", isLoading);
     };
 
     fetchAuthStatus();
@@ -111,6 +110,18 @@ const App = () => {
 
   return (
     <>
+      {isLoading && !islogin && (
+        <div className="min-h-screen flex items-center justify-center bg-gray-900 fixed top-0 left-0 w-full z-50">
+          <div className="text-center">
+            <div className="relative mb-6">
+              <div className="w-16 h-16 border-4 border-t-4 border-white border-opacity-20 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-4">Welcome</h1>
+            <p className="text-white">Loading your experience...</p>
+          </div>
+        </div>
+      )}
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -120,6 +131,8 @@ const App = () => {
             <Route path="contact" element={<Contact />} />
             <Route path="item/:id" element={<Item />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" />} />

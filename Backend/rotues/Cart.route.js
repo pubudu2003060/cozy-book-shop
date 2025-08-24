@@ -4,6 +4,7 @@ import {
   loadCartData,
   getCartCount,
   updateItemQuantity,
+  removeItemFromCart,
 } from "../controllers/Cart.controler.js";
 import jwtCheck from "../middleware/jwtCheck.js";
 import { checkUser } from "../middleware/checkUser.js";
@@ -21,6 +22,13 @@ cartRoute.put(
   jwtCheck,
   checkUser,
   updateItemQuantity
+);
+
+cartRoute.delete(
+  "/removeitemfromcart",
+  jwtCheck,
+  checkUser,
+  removeItemFromCart
 );
 
 export default cartRoute;

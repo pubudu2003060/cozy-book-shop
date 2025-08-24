@@ -15,7 +15,15 @@ const userSchema = new mongoose.Schema(
     },
     picture: {
       type: String,
-      required: false,
+    },
+    contactNumber: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    address: {
+      type: String,
     },
     cartId: {
       type: mongoose.Schema.Types.ObjectId,

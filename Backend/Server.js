@@ -8,8 +8,6 @@ import emailRouter from "./rotues/Email.route.js";
 import userRoute from "./rotues/User.route.js";
 import authRouter from "./rotues/Auth.route.js";
 import startHTTPSServer from "./configs/HttpsServer.js";
-import jwtCheck from "./middleware/jwtCheck.js";
-import { checkUser } from "./middleware/checkUser.js";
 
 const app = express();
 
@@ -17,7 +15,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://localhost:5173",
     credentials: true,
   })
 );
