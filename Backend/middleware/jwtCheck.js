@@ -1,9 +1,12 @@
 import { auth } from "express-oauth2-jwt-bearer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const jwtCheck = auth({
-  audience: "https://localhost:5000",
-  issuerBaseURL: "https://dev-zg2zh4fjwx56n2jo.us.auth0.com/",
-  tokenSigningAlg: "RS256",
+  audience: process.env.AUDIENCE,
+  issuerBaseURL: process.env.ISSUREBASEURL,
+  tokenSigningAlg: process.env.TOKENSIGNINALG,
 });
 
 export default jwtCheck;

@@ -24,12 +24,6 @@ app.use(
 
 app.use(express.json());
 
-app.use(express.urlencoded({ extended: true }));
-
-app.get("/authorized", jwtCheck, checkUser, function (req, res) {
-  res.json(req.user);
-});
-
 app.use("/api/auth", authRouter);
 
 app.use("/api/book", bookRoute);
