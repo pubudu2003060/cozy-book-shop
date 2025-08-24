@@ -55,7 +55,6 @@ export const signupUser = async (req, res) => {
 export const signinUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
 
     const existingUSer = await User.findOne({ email });
     if (!existingUSer) {
@@ -68,7 +67,6 @@ export const signinUser = async (req, res) => {
       password,
       existingUSer.password
     );
-    console.log(isPasswordValid);
 
     if (!isPasswordValid) {
       res.status(400).json({ status: false, message: "Invalid password" });

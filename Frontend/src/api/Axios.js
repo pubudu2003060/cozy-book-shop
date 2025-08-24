@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const freeAxios = axios.create({
   baseURL: "https://localhost:5000/api",
@@ -20,6 +21,21 @@ export const JWTAxios = axios.create({
 
 JWTAxios.interceptors.request.use(
   (config) => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      toast.error("please sign in", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    config.headers.Authorization = `Bearer ${accessToken}`;
     return config;
   },
   (error) => Promise.reject(error)
@@ -28,7 +44,7 @@ JWTAxios.interceptors.request.use(
 JWTAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    /*const originalRequest = error.config;
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
@@ -49,7 +65,7 @@ JWTAxios.interceptors.response.use(
         return Promise.reject(error);
       }
     }
-
+*/
     return Promise.reject(error);
   }
 );
