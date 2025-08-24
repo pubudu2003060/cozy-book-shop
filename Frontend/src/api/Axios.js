@@ -22,7 +22,8 @@ export const JWTAxios = axios.create({
 JWTAxios.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
+    const userId = localStorage.getItem("userId");
+    if (!accessToken && !userId) {
       toast.error("please sign in", {
         position: "top-center",
         autoClose: 5000,
@@ -36,6 +37,9 @@ JWTAxios.interceptors.request.use(
       return;
     }
     config.headers.Authorization = `Bearer ${accessToken}`;
+
+    config.headers.userId = userId;
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -44,28 +48,14 @@ JWTAxios.interceptors.request.use(
 JWTAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
-    /*const originalRequest = error.config;
+    const originalRequest = error.config;
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      try {
-        const res = await freeAxios.get("/auth/refreshaccesstoken");
-        const newAccessToken = res.data.accessToken;
-
-        localStorage.setItem("accessToken", newAccessToken);
-
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-
-        return JWTAxios(originalRequest);
-      } catch (error) {
-        console.log(error);
-        localStorage.removeItem("accessToken");
-        window.location.href = "/signin";
-        return Promise.reject(error);
-      }
+      return Promise.reject(error);
     }
-*/
+
     return Promise.reject(error);
   }
 );

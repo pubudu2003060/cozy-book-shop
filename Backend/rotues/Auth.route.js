@@ -1,17 +1,9 @@
 import express from "express";
-import {
-  signupUser,
-  signinUser,
-  refreshToken,
-} from "../controllers/Auth.controler.js";
-import { verifyRefreshToken } from "../middleware/auth.js";
+import { login } from "../controllers/Auth.controler.js";
+import jwtCheck from "../middleware/jwtCheck.js";
 
 const authRouter = express.Router();
 
-authRouter.post("/signup", signupUser);
-
-authRouter.post("/signin", signinUser);
-
-authRouter.get("/refreshaccesstoken", verifyRefreshToken, refreshToken);
+authRouter.post("/login", jwtCheck, login);
 
 export default authRouter;

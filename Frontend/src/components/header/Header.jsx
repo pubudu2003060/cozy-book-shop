@@ -5,15 +5,19 @@ import { ShoppingCart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   increaseCountByAmount,
+  removeDatafromCart,
   resetCartCount,
 } from "../../state/cart/CartSlice";
 import { JWTAxios } from "../../api/Axios";
+import { useAuth0 } from "@auth0/auth0-react";
+import { logedOut } from "../../state/user/UserSlice";
 
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartCount = useSelector((state) => state.cart.itemCount);
+  const { loginWithRedirect, logout } = useAuth0();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -43,6 +47,20 @@ const Header = () => {
 
     return () => clearTimeout(timer);
   }, [isLogin]);
+
+  const login = async () => {
+    await loginWithRedirect();
+  };
+
+  const logoutUser = async () => {
+    if (isLogin) {
+      dispatch(logedOut());
+      dispatch(resetCartCount());
+      dispatch(removeDatafromCart());
+      localStorage.removeItem("accessToken");
+      await logout();
+    }
+  };
 
   return (
     <header className="relative flex items-center justify-between px-4 py-3 bg-theme shadow-lg md:px-8 md:py-4 border-b border-theme-neutral">
@@ -95,12 +113,12 @@ const Header = () => {
       <div className="flex items-center space-x-3 md:space-x-4">
         {isLogin ? (
           <>
-            <Link
-              to="/signin?status=logout"
+            <button
+              onClick={logoutUser}
               className="bg-theme-primary text-theme-neutral px-3 py-1 rounded-md hover:bg-theme-secondary font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
             >
               Log Out
-            </Link>
+            </button>
 
             <Link
               to="/cart"
@@ -114,12 +132,12 @@ const Header = () => {
           </>
         ) : (
           <>
-            <Link
-              to="/signin?status=login"
+            <button
+              onClick={login}
               className="hidden md:block font-body text-theme hover:text-theme-accent transition-colors duration-300"
             >
               Sign In
-            </Link>
+            </button>
           </>
         )}
 
@@ -202,7 +220,7 @@ const Header = () => {
               <>
                 <li className="w-full">
                   <button
-                    onClick={handleSignin}
+                    onClick={login}
                     className="hidden md:block font-body text-theme hover:text-theme-accent transition-colors duration-300"
                   >
                     Sign In

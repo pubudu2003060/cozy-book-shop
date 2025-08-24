@@ -13,16 +13,9 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    googleId: {
+    picture: {
       type: String,
-      sparse: true,
-    },
-    password: {
-      type: String,
-    },
-    refreshTokenHash: {
-      type: String,
-      default: null,
+      required: false,
     },
     cartId: {
       type: mongoose.Schema.Types.ObjectId,

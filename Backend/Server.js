@@ -4,11 +4,12 @@ import cors from "cors";
 import { connectDb } from "./configs/DBConnection.js";
 import bookRoute from "./rotues/Book.route.js";
 import cartRoute from "./rotues/Cart.route.js";
-import cookieParser from "cookie-parser";
 import emailRouter from "./rotues/Email.route.js";
 import userRoute from "./rotues/User.route.js";
 import authRouter from "./rotues/Auth.route.js";
 import startHTTPSServer from "./configs/HttpsServer.js";
+import jwtCheck from "./middleware/jwtCheck.js";
+import { checkUser } from "./middleware/checkUser.js";
 
 const app = express();
 
@@ -23,9 +24,11 @@ app.use(
 
 app.use(express.json());
 
-app.use(cookieParser());
-
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/authorized", jwtCheck, checkUser, function (req, res) {
+  res.json(req.user);
+});
 
 app.use("/api/auth", authRouter);
 
@@ -37,9 +40,9 @@ app.use("/api/email", emailRouter);
 
 app.use("/api/user", userRoute);
 
-app.use((err, _req, res, _next) => {
+app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).json({ error: "Server error" });
+  res.status(err.status).json({ error: err.message });
 });
 
 const PORT = process.env.PORT || 5000;

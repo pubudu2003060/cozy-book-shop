@@ -13,10 +13,10 @@ createRoot(document.getElementById("root")).render(
         domain="dev-zg2zh4fjwx56n2jo.us.auth0.com"
         clientId="LvWb3PcxYn4hBd75AdyAVFHBUmZAQ30T"
         authorizationParams={{
-          redirect_uri: "http://localhost:5173/signin",
+          redirect_uri: window.location.origin,
+          audience: "https://localhost:5000",
+          scope: "openid profile email",
         }}
-        scope="openid profile email"
-        audience="https://localhost:5000"
       >
         <App />
       </Auth0Provider>
