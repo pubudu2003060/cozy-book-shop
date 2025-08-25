@@ -13,16 +13,17 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    googleId: {
-      type: String,
-      sparse: true,
-    },
-    password: {
+    picture: {
       type: String,
     },
-    refreshTokenHash: {
+    contactNumber: {
       type: String,
-      default: null,
+    },
+    country: {
+      type: String,
+    },
+    address: {
+      type: String,
     },
     cartId: {
       type: mongoose.Schema.Types.ObjectId,

@@ -1,60 +1,87 @@
-import React, { createContext, useEffect, useState } from "react";
-import {
-  BrowserRouter,
-  Navigate,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Home from "./screns/home/Home";
-import SignIn from "./screns/signin/SignIn";
-import SignUp from "./screns/signup/SignUp";
 import Item from "./screns/item/Item";
 import Cart from "./screns/cart/Cart";
 import AllItems from "./screns/all items/AllItems";
 import About from "./screns/about/About";
 import Contact from "./screns/contact/Contact";
 import { toast, ToastContainer } from "react-toastify";
-import { JWTAxios } from "./api/Axios";
-import { useDispatch } from "react-redux";
-import { logedIn, logedOut } from "./state/user/UserSlice";
+import { useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { freeAxios } from "./api/Axios";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserData, logedIn, logedOut } from "./state/user/UserSlice";
+import Checkout from "./screns/checkout/Checkout";
+import Profile from "./screns/profile/profile";
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
+  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
+  const islogin = useSelector((state) => state.user.isLogedIn);
 
-  useEffect(() => {
-    setLoading(true);
+  const handlelogin = async () => {
+    try {
+      const token = await getAccessTokenSilently();
 
-    const checkLogin = async () => {
-      try {
-        const responce = await JWTAxios.get("/user/isloged");
-        if (responce.data.success) {
-          dispatch(logedIn());
-        } else {
-          toast.error("Login to your account", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: false,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
-          dispatch(logedOut());
+      const userInfo = await axios.get(
+        "https://dev-zg2zh4fjwx56n2jo.us.auth0.com/userinfo",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        console.log("This is not a authenticated user");
-      }
-    };
+      );
 
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      checkLogin();
-    } else {
-      toast.error("Login to your account", {
+      const userdata = userInfo.data;
+
+      const responce = await freeAxios.post(
+        "/auth/login",
+        {
+          email: userdata.email,
+          name: userdata.name,
+          picture: userdata.picture,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (responce.data.status) {
+        toast.success("User login successfully", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        localStorage.setItem("userId", responce.data.id);
+        localStorage.setItem("accessToken", token);
+        dispatch(logedIn());
+        dispatch(addUserData(responce.data.user));
+        console.log(responce.data.user);
+      } else {
+        toast.error("User login fail", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("User signed In error:", error);
+      toast.error("Error login user", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -65,21 +92,36 @@ const App = () => {
         theme: "dark",
       });
     }
+  };
 
-    setLoading(false);
-  }, []);
+  useEffect(() => {
+    const fetchAuthStatus = async () => {
+      if (!isAuthenticated && isLoading) {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("accessToken");
+        dispatch(logedOut());
+      } else {
+        handlelogin();
+      }
+    };
 
-  return loading ? (
-    <div className="min-h-[calc(100vh)] bg-[oklch(0.95_0.01_280)] dark:bg-[oklch(0.25_0.02_280)] flex items-center justify-center">
-      <div className="text-center">
-        <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-t-[oklch(0.75_0.17_85)] dark:border-t-[oklch(0.8_0.17_85)] border-[oklch(0.55_0.03_256)] dark:border-[oklch(0.7_0.03_256)]"></div>
-        <p className="mt-4  text-lg text-[oklch(0.2_0.03_260)] dark:text-[oklch(0.9_0.01_260)]">
-          Loading...
-        </p>
-      </div>
-    </div>
-  ) : (
+    fetchAuthStatus();
+  }, [isAuthenticated]);
+
+  return (
     <>
+      {isLoading && !islogin && (
+        <div className="min-h-screen flex items-center justify-center bg-gray-900 fixed top-0 left-0 w-full z-50">
+          <div className="text-center">
+            <div className="relative mb-6">
+              <div className="w-16 h-16 border-4 border-t-4 border-white border-opacity-20 border-t-blue-500 rounded-full animate-spin mx-auto"></div>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-4">Welcome</h1>
+            <p className="text-white">Loading your experience...</p>
+          </div>
+        </div>
+      )}
+
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -89,8 +131,8 @@ const App = () => {
             <Route path="contact" element={<Contact />} />
             <Route path="item/:id" element={<Item />} />
             <Route path="cart" element={<Cart />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="profile" element={<Profile />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" />} />

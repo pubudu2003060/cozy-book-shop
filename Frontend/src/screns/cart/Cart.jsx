@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { JWTAxios } from "../../api/Axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,20 +7,23 @@ import { Minus, Plus } from "lucide-react";
 import {
   addDatatoCart,
   decreaseCartItemAmountByid,
+  decreaseCountByOne,
   increaseCartItemAmountByid,
+  removeitemfromCart,
 } from "../../state/cart/CartSlice";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart.data);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartData = async () => {
       try {
         const response = await JWTAxios.get("/cart/loadcartdata");
+
         if (response.data.status) {
           dispatch(addDatatoCart(response.data.cart));
         } else {
@@ -88,6 +91,52 @@ const Cart = () => {
     } catch (error) {
       console.log("Error Update quantity: ", error.message);
       toast.error("Error Update quantity", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    }
+  };
+
+  const handleDelete = async (itemId) => {
+    try {
+      const responce = await JWTAxios.delete(`cart/removeitemfromcart`, {
+        data: { bookId: itemId },
+      });
+
+      if (responce.data.status) {
+        toast.success("Item removed from cart", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        dispatch(removeitemfromCart(itemId));
+        dispatch(decreaseCountByOne());
+      } else {
+        toast.error("Fail to remove item from cart", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.log("Error removing item from cart: ", error.message);
+      toast.error("Error removing item from cart", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -221,13 +270,24 @@ const Cart = () => {
                     </span>
                   </p>
                 </div>
-                <div className="flex sm:flex-col gap-2">
-                  <button
-                    onClick={() => handleupdate(item._id, item.quantity)}
-                    className="bg-theme-primary text-theme-neutral px-4 py-2 rounded-md hover:bg-theme-accent hover:text-theme font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
-                  >
-                    Update
-                  </button>
+                <div className="flex  gap-2 justify-between">
+                  <div className="flex sm:flex-col gap-2">
+                    <button
+                      onClick={() => handleupdate(item._id, item.quantity)}
+                      className="bg-theme-primary text-theme-neutral px-4 py-2 rounded-md hover:bg-theme-accent hover:text-theme font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
+                    >
+                      Update
+                    </button>
+                  </div>
+
+                  <div className="flex sm:flex-col gap-2">
+                    <button
+                      onClick={() => handleDelete(item.bookId._id)}
+                      className="bg-red-600 dark:bg-red-500 text-theme-neutral px-4 py-2 rounded-md hover:bg-theme-accent hover:text-theme font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
+                    >
+                      delete
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}
@@ -242,7 +302,10 @@ const Cart = () => {
                 ${totalPrice.toFixed(2)}
               </p>
             </div>
-            <button className="w-full mt-4 bg-theme-accent text-theme px-6 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary">
+            <button
+              onClick={() => navigate("/checkout")}
+              className="w-full mt-4 bg-theme-accent text-theme px-6 py-3 rounded-md hover:bg-theme-primary hover:text-theme-neutral font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
+            >
               Proceed to Checkout
             </button>
           </div>

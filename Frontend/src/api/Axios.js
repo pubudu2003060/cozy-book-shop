@@ -1,7 +1,8 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const freeAxios = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://localhost:5000/api",
   timeout: 100000,
   headers: {
     "Content-Type": "application/json",
@@ -10,7 +11,7 @@ export const freeAxios = axios.create({
 });
 
 export const JWTAxios = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://localhost:5000/api",
   timeout: 100000,
   headers: {
     "Content-Type": "application/json",
@@ -21,12 +22,24 @@ export const JWTAxios = axios.create({
 JWTAxios.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      window.location.href = "/signin";
+    const userId = localStorage.getItem("userId");
+    if (!accessToken && !userId) {
+      toast.error("please sign in", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
     }
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
+    config.headers.userId = userId;
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -40,21 +53,7 @@ JWTAxios.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      try {
-        const res = await freeAxios.get("/auth/refreshaccesstoken");
-        const newAccessToken = res.data.accessToken;
-
-        localStorage.setItem("accessToken", newAccessToken);
-
-        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-
-        return JWTAxios(originalRequest);
-      } catch (error) {
-        console.log(error);
-        localStorage.removeItem("accessToken");
-        window.location.href = "/signin";
-        return Promise.reject(error);
-      }
+      return Promise.reject(error);
     }
 
     return Promise.reject(error);

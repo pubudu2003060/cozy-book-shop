@@ -15,6 +15,9 @@ const CartSCice = createSlice({
     increaseCountByAmount: (state, action) => {
       state.itemCount += action.payload;
     },
+    decreaseCountByOne: (state, action) => {
+      state.itemCount -= 1;
+    },
     resetCartCount: (state) => {
       state.itemCount = 0;
     },
@@ -38,6 +41,11 @@ const CartSCice = createSlice({
           : item
       );
     },
+    removeitemfromCart: (state, action) => {
+      state.data = state.data.filter(
+        (item) => item.bookId._id !== action.payload
+      );
+    },
   },
 });
 
@@ -49,5 +57,8 @@ export const {
   increaseCartItemAmountByid,
   decreaseCartItemAmountByid,
   removeDatafromCart,
+  removeitemfromCart,
+  decreaseCountByOne,
 } = CartSCice.actions;
+
 export default CartSCice.reducer;

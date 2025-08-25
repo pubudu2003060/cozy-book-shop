@@ -132,3 +132,45 @@ export const updateItemQuantity = async (req, res) => {
     res.status(500).json({ status: false, message: "Server error" });
   }
 };
+
+export const removeItemFromCart = async (req, res) => {
+  try {
+    console.log(req.body);
+    const bookId = req.body.bookId;
+
+    const user = req.user;
+    const cartId = user.cartId;
+
+    const cart = await Cart.findById(cartId);
+
+    if (!cart) {
+      return res.status(404).json({
+        status: false,
+        message: "Cart not found",
+      });
+    }
+
+    const book = cart.books.some((book) => book.bookId.toString() === bookId);
+    if (!book) {
+      return res.status(400).json({
+        status: false,
+        message: "Book do not exists in the cart",
+      });
+    }
+
+    await Cart.findByIdAndUpdate(cartId, {
+      $pull: { books: { bookId: bookId } },
+    });
+
+    res.status(200).json({
+      status: true,
+      message: "Book deleted from cart successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting book from cart:", error);
+    res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
+};

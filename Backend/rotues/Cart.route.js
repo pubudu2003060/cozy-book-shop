@@ -4,17 +4,31 @@ import {
   loadCartData,
   getCartCount,
   updateItemQuantity,
+  removeItemFromCart,
 } from "../controllers/Cart.controler.js";
-import { verifyAccessToken } from "../middleware/Auth.js";
+import jwtCheck from "../middleware/jwtCheck.js";
+import { checkUser } from "../middleware/checkUser.js";
 
 const cartRoute = express.Router();
 
-cartRoute.post("/addtocart", verifyAccessToken, addToCart);
+cartRoute.post("/addtocart", jwtCheck, checkUser, addToCart);
 
-cartRoute.get("/loadcartdata", verifyAccessToken, loadCartData);
+cartRoute.get("/loadcartdata", jwtCheck, checkUser, loadCartData);
 
-cartRoute.get("/getcartsize", verifyAccessToken, getCartCount);
+cartRoute.get("/getcartsize", jwtCheck, checkUser, getCartCount);
 
-cartRoute.put("/updatecartitemquantity", verifyAccessToken, updateItemQuantity);
+cartRoute.put(
+  "/updatecartitemquantity",
+  jwtCheck,
+  checkUser,
+  updateItemQuantity
+);
+
+cartRoute.delete(
+  "/removeitemfromcart",
+  jwtCheck,
+  checkUser,
+  removeItemFromCart
+);
 
 export default cartRoute;

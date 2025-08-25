@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DarkmoodToggler from "../darkmoodtogller/DarkmoodToggler";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, UserCircle } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { logedOut } from "../../state/user/UserSlice";
 import {
   increaseCountByAmount,
-  removeDatafromCart,
   resetCartCount,
 } from "../../state/cart/CartSlice";
 import { JWTAxios } from "../../api/Axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = () => {
   const isLogin = useSelector((state) => state.user.isLogedIn);
   const dispatch = useDispatch();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const cartCount = useSelector((state) => state.cart.itemCount);
-  const navigate = useNavigate();
+  const { loginWithRedirect } = useAuth0();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -35,23 +34,21 @@ const Header = () => {
     }
   };
 
-  const handleLogout = () => {
-    if (isLogin) {
-      dispatch(logedOut());
-      dispatch(resetCartCount());
-      dispatch(removeDatafromCart());
-      localStorage.removeItem("accessToken");
-      navigate("/");
-    }
-  };
-
   useEffect(() => {
-    if (isLogin) {
-      getCartLength();
-    } else {
-      dispatch(resetCartCount());
-    }
+    const timer = setTimeout(() => {
+      if (isLogin) {
+        getCartLength();
+      } else {
+        dispatch(resetCartCount());
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, [isLogin]);
+
+  const login = async () => {
+    await loginWithRedirect();
+  };
 
   return (
     <header className="relative flex items-center justify-between px-4 py-3 bg-theme shadow-lg md:px-8 md:py-4 border-b border-theme-neutral">
@@ -104,13 +101,6 @@ const Header = () => {
       <div className="flex items-center space-x-3 md:space-x-4">
         {isLogin ? (
           <>
-            <button
-              onClick={handleLogout}
-              className="bg-theme-primary text-theme-neutral px-3 py-1 rounded-md hover:bg-theme-secondary font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-theme-primary"
-            >
-              Log Out
-            </button>
-
             <Link
               to="/cart"
               className="relative font-body text-theme hover:text-theme-accent transition-colors duration-300"
@@ -120,21 +110,23 @@ const Header = () => {
               </span>
               <ShoppingCart />
             </Link>
+
+            <Link
+              to="/profile"
+              className="font-body text-theme hover:text-theme-accent transition-colors duration-300"
+              title="Profile"
+            >
+              <UserCircle size={24} />
+            </Link>
           </>
         ) : (
           <>
-            <Link
-              to="/signin"
-              className="hidden md:block font-body text-theme hover:text-theme-accent transition-colors duration-300"
+            <button
+              onClick={login}
+              className="block font-body text-theme hover:text-theme-accent transition-colors duration-300"
             >
               Sign In
-            </Link>
-            <Link
-              to="/signup"
-              className="hidden md:block font-body text-theme hover:text-theme-accent transition-colors duration-300"
-            >
-              Sign Up
-            </Link>
+            </button>
           </>
         )}
 
@@ -211,30 +203,6 @@ const Header = () => {
                 Contact
               </Link>
             </li>
-            {isLogin ? (
-              <></>
-            ) : (
-              <>
-                <li className="w-full">
-                  <Link
-                    to="/signin"
-                    className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
-                    onClick={toggleMobileMenu}
-                  >
-                    Sign In
-                  </Link>
-                </li>
-                <li className="w-full">
-                  <Link
-                    to="/signup"
-                    className="block py-2 text-center font-body text-theme hover:text-theme-accent font-medium transition-colors duration-300"
-                    onClick={toggleMobileMenu}
-                  >
-                    Sign Up
-                  </Link>
-                </li>
-              </>
-            )}
           </ul>
         </nav>
       )}
