@@ -8,6 +8,7 @@ import emailRouter from "./rotues/Email.route.js";
 import userRoute from "./rotues/User.route.js";
 import authRouter from "./rotues/Auth.route.js";
 import startHTTPSServer from "./configs/HttpsServer.js";
+import orderRoute from "./rotues/Order.route.js";
 
 const app = express();
 
@@ -15,7 +16,7 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: "https://localhost:5173",
+    origin: ["https://localhost:5173", "https://cozybookshop.netlify.app"],
     credentials: true,
   })
 );
@@ -31,6 +32,8 @@ app.use("/api/cart", cartRoute);
 app.use("/api/email", emailRouter);
 
 app.use("/api/user", userRoute);
+
+app.use("/api/order", orderRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);
