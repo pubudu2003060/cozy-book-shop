@@ -43,4 +43,9 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-startHTTPSServer(app, PORT, connectDb);
+//startHTTPSServer(app, PORT, connectDb);
+
+app.listen(PORT, async () => {
+  await connectDb();
+  console.log(`Server is running on port ${PORT}`);
+});
