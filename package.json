@@ -1,0 +1,25 @@
+{
+  "name": "cozy-book-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix Frontend\" \"npm run dev --prefix Backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pubudu2003060/cozy-book-shop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/pubudu2003060/cozy-book-shop/issues"
+  },
+  "homepage": "https://github.com/pubudu2003060/cozy-book-shop#readme",
+  "dependencies": {
+    "concurrently": "^9.2.1",
+    "dotenv": "^17.2.1"
+  }
+}
