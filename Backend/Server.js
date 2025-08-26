@@ -17,7 +17,10 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: ["https://localhost:5173", "https://cozybookshop.netlify.app"],
+    origin: [
+      "https://localhost:5173",
+      "https://cozy-book-shop-9tc7.vercel.app/",
+    ],
     credentials: true,
   })
 );
