@@ -14,6 +14,7 @@ import {
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart.data);
+  const islogin = useSelector((state) => state.user.isLogedIn);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
@@ -56,8 +57,8 @@ const Cart = () => {
         setLoading(false);
       }
     };
-    fetchCartData();
-  }, []);
+    if (islogin) fetchCartData();
+  }, [islogin]);
 
   const handleupdate = async (itemId, quantity) => {
     try {

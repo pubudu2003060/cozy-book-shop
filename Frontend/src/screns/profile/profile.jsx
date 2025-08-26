@@ -97,11 +97,7 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    if (!isLogin) {
-      navigate("/");
-      return;
-    }
-    fetchUserProfile();
+    if (isLogin) fetchUserProfile();
   }, [isLogin, navigate]);
 
   const fetchUserProfile = async () => {

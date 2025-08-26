@@ -30,12 +30,13 @@ const Orders = () => {
   const totalOrders = useSelector((state) => state.order.totalOrders);
   const [cancelingOrderId, setCancelingOrderId] = useState(null);
   const dispatch = useDispatch();
+  const islogin = useSelector((state) => state.user.isLogedIn);
 
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetchOrders(currentPage);
-  }, [currentPage]);
+    if (islogin) fetchOrders(currentPage);
+  }, [currentPage, islogin]);
 
   const fetchOrders = async (page) => {
     try {
