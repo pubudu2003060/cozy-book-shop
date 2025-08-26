@@ -2,8 +2,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const freeAxios = axios.create({
-  baseURL: "https://book-shop-seng-31222.vercel.app/api",
-  timeout: 100000,
+
+  baseURL: "https://localhost:5000/api",
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,8 +12,9 @@ export const freeAxios = axios.create({
 });
 
 export const JWTAxios = axios.create({
-  baseURL: "https://book-shop-seng-31222.vercel.app/api",
-  timeout: 100000,
+
+  baseURL: "https://localhost:5000/api",
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },

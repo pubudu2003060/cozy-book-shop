@@ -1,6 +1,7 @@
 import transporter from "../configs/Nodemailer.js";
 
 export const sendEmail = async (req, res) => {
+  console.log("Request Body:", req.body);
   const { name, email, message } = req.body;
 
   try {

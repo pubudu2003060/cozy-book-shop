@@ -5,13 +5,15 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import Store from "./state/Store.js";
 import { Auth0Provider } from "@auth0/auth0-react";
+const domain = import.meta.env.VITE_DOMAIN;
+const clientid = import.meta.env.VITE_CLIENTID;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={Store}>
       <Auth0Provider
-        domain="dev-zg2zh4fjwx56n2jo.us.auth0.com"
-        clientId="LvWb3PcxYn4hBd75AdyAVFHBUmZAQ30T"
+        domain={domain}
+        clientId={clientid}
         authorizationParams={{
           redirect_uri: window.location.origin,
           audience: "https://localhost:5000",

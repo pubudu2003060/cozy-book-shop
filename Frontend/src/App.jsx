@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUserData, logedIn, logedOut } from "./state/user/UserSlice";
 import Checkout from "./screns/checkout/Checkout";
 import Profile from "./screns/profile/profile";
+import Orders from "./screns/orders/Orders";
 
 const App = () => {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
@@ -133,6 +134,7 @@ const App = () => {
             <Route path="cart" element={<Cart />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="orders" element={<Orders />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" />} />

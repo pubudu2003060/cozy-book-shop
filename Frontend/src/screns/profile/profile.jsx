@@ -15,6 +15,8 @@ import {
   Camera,
   LogOut,
   Locate,
+  ListOrdered,
+  History,
 } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -95,11 +97,7 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    if (!isLogin) {
-      navigate("/");
-      return;
-    }
-    fetchUserProfile();
+    if (isLogin) fetchUserProfile();
   }, [isLogin, navigate]);
 
   const fetchUserProfile = async () => {
@@ -469,6 +467,32 @@ const Profile = () => {
                       {userData.address || "Not set"}
                     </p>
                   )}
+                </div>
+              </div>
+            </div>
+
+            {/* success Zone */}
+            <div className="mt-12 pt-6 border-t border-theme-secondary">
+              <div className="space-y-4">
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-lg font-medium text-green-800 dark:text-green-300">
+                        order history
+                      </h4>
+                      <p className="text-green-600 dark:text-green-400 text-sm">
+                        View your past orders and their statuses.
+                      </p>
+                    </div>
+
+                    <Link
+                      to="/orders"
+                      className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                      <History />
+                      My Orders
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
