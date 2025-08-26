@@ -39,6 +39,10 @@ app.use("/api/user", userRoute);
 
 app.use("/api/order", orderRoute);
 
+app.get("/aaa", (req, res) => {
+  res.send("API is running....");
+});
+
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status).json({ error: err.message });
