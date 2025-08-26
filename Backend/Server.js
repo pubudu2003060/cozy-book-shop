@@ -19,7 +19,7 @@ app.use(
   cors({
     origin: [
       "https://localhost:5173",
-      "https://cozy-book-shop-9tc7.vercel.app/",
+      "https://cozy-book-shop-9tc7.vercel.app",
     ],
     credentials: true,
   })
