@@ -22,8 +22,6 @@ export const getAllBooks = async (req, res) => {
       };
     });
 
-    console.log(returnbookset);
-
     res.status(200).json({
       status: true,
       message: "Books fetched successfully",
