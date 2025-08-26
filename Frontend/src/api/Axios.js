@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 export const freeAxios = axios.create({
   baseURL: "https://localhost:5000/api",
-  timeout: 100000,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,7 +12,7 @@ export const freeAxios = axios.create({
 
 export const JWTAxios = axios.create({
   baseURL: "https://localhost:5000/api",
-  timeout: 100000,
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },

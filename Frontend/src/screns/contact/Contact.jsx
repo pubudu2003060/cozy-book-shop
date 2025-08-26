@@ -31,7 +31,7 @@ const Contact = () => {
     try {
       setSending(true);
       const response = await freeAxios.post(
-        "http://localhost:5000/api/email/sendemail",
+        "https://localhost:5000/api/email/sendemail",
         form
       );
 
@@ -45,7 +45,7 @@ const Contact = () => {
       }
       setSending(false);
     } catch (err) {
-      setSending(fal);
+      setSending(false);
       console.error(err);
       setError("Error sending message.");
     }
