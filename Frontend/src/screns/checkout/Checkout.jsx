@@ -209,7 +209,7 @@ const Checkout = () => {
       const orderData = {
         userId,
         contactNumber: formData.contactNumber,
-        country: user.country,
+
         deliveryDate: formData.deliveryDate,
         deliveryTime: formData.deliveryTime,
         deliveryLocation: formData.deliveryLocation,
@@ -350,17 +350,6 @@ const Checkout = () => {
                 </label>
                 <div className="text-theme bg-theme border border-theme-secondary rounded-md px-3 py-2 text-sm opacity-60">
                   {user?.contactNumber || "Not set"}
-                </div>
-              </div>
-
-              {/* Country (Read-only) */}
-              <div>
-                <label className="flex items-center text-theme-primary font-medium mb-2 text-sm">
-                  <Globe size={16} className="mr-2" />
-                  Country
-                </label>
-                <div className="text-theme bg-theme border border-theme-secondary rounded-md px-3 py-2 text-sm opacity-60">
-                  {user?.country || "Not set"}
                 </div>
               </div>
 

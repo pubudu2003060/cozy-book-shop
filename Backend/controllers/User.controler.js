@@ -12,7 +12,7 @@ export const updateProfile = async (req, res) => {
       {
         name: data.name,
         contactNumber: data.contactNumber,
-        country: data.country,
+
         address: data.address,
       },
       { new: true, runValidators: true }

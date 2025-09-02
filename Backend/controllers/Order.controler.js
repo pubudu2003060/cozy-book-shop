@@ -16,7 +16,7 @@ export const makeOrder = async (req, res) => {
 
     const requiredFields = [
       "contactNumber",
-      "country",
+
       "deliveryDate",
       "deliveryTime",
       "deliveryLocation",
@@ -66,7 +66,7 @@ export const makeOrder = async (req, res) => {
     const newOrder = new Order({
       userId: orderDetails.userId,
       contactNumber: orderDetails.contactNumber,
-      country: orderDetails.country,
+
       deliveryDate: new Date(orderDetails.deliveryDate),
       deliveryTime: orderDetails.deliveryTime,
       deliveryLocation: orderDetails.deliveryLocation,
@@ -125,7 +125,7 @@ export const getOrders = async (req, res) => {
       purchaseDate: order.purchaseDate,
       deliveryDate: order.deliveryDate,
       deliveryTime: order.deliveryTime,
-      country: order.country,
+
       deliveryLocation: order.deliveryLocation,
       message: order.message,
       contactNumber: order.contactNumber,

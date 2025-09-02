@@ -44,7 +44,7 @@ const Profile = () => {
     name: "",
     email: "",
     contactNumber: "",
-    country: "",
+
     picture: "",
     address: "",
   });
@@ -52,49 +52,9 @@ const Profile = () => {
   const [editData, setEditData] = useState({
     name: "",
     contactNumber: "",
-    country: "",
+
     address: "",
   });
-
-  // Countries list
-  const countries = [
-    "Afghanistan",
-    "Albania",
-    "Algeria",
-    "Argentina",
-    "Australia",
-    "Austria",
-    "Bangladesh",
-    "Belgium",
-    "Brazil",
-    "Canada",
-    "China",
-    "Denmark",
-    "Egypt",
-    "Finland",
-    "France",
-    "Germany",
-    "India",
-    "Indonesia",
-    "Italy",
-    "Japan",
-    "Malaysia",
-    "Netherlands",
-    "New Zealand",
-    "Norway",
-    "Pakistan",
-    "Philippines",
-    "Singapore",
-    "South Korea",
-    "Spain",
-    "Sri Lanka",
-    "Sweden",
-    "Switzerland",
-    "Thailand",
-    "United Kingdom",
-    "United States",
-    "Vietnam",
-  ];
 
   useEffect(() => {
     if (isLogin) fetchUserProfile();
@@ -105,7 +65,7 @@ const Profile = () => {
       name: user.name || "",
       email: user.email || "",
       contactNumber: user.contactNumber || "",
-      country: user.country || "",
+
       picture: user.picture || "",
       address: user.address || "",
     });
@@ -113,7 +73,7 @@ const Profile = () => {
     setEditData({
       name: user.name || "",
       contactNumber: user.contactNumber || "",
-      country: user.country || "",
+
       address: user.address || "",
     });
 
@@ -137,7 +97,7 @@ const Profile = () => {
     setEditData({
       name: userData.name,
       contactNumber: userData.contactNumber,
-      country: userData.country,
+
       address: userData.address,
     });
   };
@@ -416,33 +376,6 @@ const Profile = () => {
                   ) : (
                     <p className="text-theme bg-theme border border-theme-secondary rounded-md px-4 py-3">
                       {userData.contactNumber || "Not set"}
-                    </p>
-                  )}
-                </div>
-
-                {/* Country */}
-                <div>
-                  <label className="flex items-center text-theme-primary font-medium mb-2">
-                    <MapPin size={18} className="mr-2" />
-                    Country
-                  </label>
-                  {isEditing ? (
-                    <select
-                      name="country"
-                      value={editData.country}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-theme border border-theme-secondary rounded-md text-theme focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent transition-all duration-300"
-                    >
-                      <option value="">Select country</option>
-                      {countries.map((country) => (
-                        <option key={country} value={country}>
-                          {country}
-                        </option>
-                      ))}
-                    </select>
-                  ) : (
-                    <p className="text-theme bg-theme border border-theme-secondary rounded-md px-4 py-3">
-                      {userData.country || "Not set"}
                     </p>
                   )}
                 </div>

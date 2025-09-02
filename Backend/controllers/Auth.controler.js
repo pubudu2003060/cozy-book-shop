@@ -13,7 +13,7 @@ export const login = async (req, res) => {
         email: existingUSer.email,
         picture: existingUSer.picture,
         contactNumber: existingUSer.contactNumber,
-        country: existingUSer.country,
+
         address: existingUSer.address,
       };
 

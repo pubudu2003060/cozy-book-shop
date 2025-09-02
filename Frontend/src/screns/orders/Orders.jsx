@@ -305,14 +305,6 @@ const Orders = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <Globe size={16} className="text-theme-secondary" />
-                      <div>
-                        <p className="text-sm text-theme-secondary">Country</p>
-                        <p className="text-theme">{order.country}</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-3">
                       <Calendar size={16} className="text-theme-secondary" />
                       <div>
                         <p className="text-sm text-theme-secondary">
