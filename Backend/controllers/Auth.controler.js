@@ -4,8 +4,9 @@ import Cart from "../models/Cart.model.js";
 export const login = async (req, res) => {
   try {
     const { email, name, picture } = req.body;
+    const sub = req.auth.payload.sub;
 
-    const existingUSer = await User.findOne({ email });
+    const existingUSer = await User.findOne({ sub });
     if (existingUSer) {
       const user = {
         name: existingUSer.name,
@@ -31,6 +32,7 @@ export const login = async (req, res) => {
       name,
       email,
       picture,
+      sub,
       cartId: newCart._id,
     });
 

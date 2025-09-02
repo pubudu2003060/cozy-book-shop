@@ -7,9 +7,8 @@ import cartRoute from "./rotues/Cart.route.js";
 import emailRouter from "./rotues/Email.route.js";
 import userRoute from "./rotues/User.route.js";
 import authRouter from "./rotues/Auth.route.js";
-//import startHTTPSServer from "./configs/HttpsServer.js";
+import startHTTPSServer from "./configs/HttpsServer.js";
 import orderRoute from "./rotues/Order.route.js";
-import Book from "./models/Book.model.js";
 
 const app = express();
 
@@ -39,10 +38,6 @@ app.use("/api/user", userRoute);
 
 app.use("/api/order", orderRoute);
 
-app.get("/aaa", (req, res) => {
-  res.send("API is running....");
-});
-
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.status).json({ error: err.message });
@@ -50,9 +45,4 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-//startHTTPSServer(app, PORT, connectDb);
-
-app.listen(PORT, async () => {
-  await connectDb();
-  console.log(`Server is running on port ${PORT}`);
-});
+startHTTPSServer(app, PORT, connectDb);

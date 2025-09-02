@@ -2,9 +2,9 @@ import User from "../models/User.model.js";
 
 export const checkUser = async (req, res, next) => {
   try {
-    const id = req.header("userId");
+    const sub = req.auth.payload.sub;
 
-    const responce = await User.findById(id);
+    const responce = await User.findOne({ sub });
 
     if (!responce) {
       return res
