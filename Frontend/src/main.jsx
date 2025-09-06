@@ -7,6 +7,7 @@ import Store from "./state/Store.js";
 import { Auth0Provider } from "@auth0/auth0-react";
 const domain = import.meta.env.VITE_DOMAIN;
 const clientid = import.meta.env.VITE_CLIENTID;
+const audience = import.meta.env.VITE_AUDIENCE;
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -16,7 +17,7 @@ createRoot(document.getElementById("root")).render(
         clientId={clientid}
         authorizationParams={{
           redirect_uri: window.location.origin,
-          audience: "https://localhost:5000",
+          audience: audience,
           scope: "openid profile email",
         }}
       >
