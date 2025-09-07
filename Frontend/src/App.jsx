@@ -18,9 +18,11 @@ import Profile from "./screns/profile/profile";
 import Orders from "./screns/orders/Orders";
 
 const App = () => {
-  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, isLoading, getAccessTokenSilently, logout } =
+    useAuth0();
   const dispatch = useDispatch();
   const islogin = useSelector((state) => state.user.isLogedIn);
+  const [loading, setLoading] = useState(false);
 
   const handlelogin = async () => {
     try {
@@ -79,6 +81,11 @@ const App = () => {
           progress: undefined,
           theme: "dark",
         });
+
+        dispatch(logedOut());
+        setTimeout(async () => {
+          await logout();
+        }, 1000);
       }
     } catch (error) {
       console.error("User signed In error:", error);
@@ -92,26 +99,38 @@ const App = () => {
         progress: undefined,
         theme: "dark",
       });
+      dispatch(logedOut());
+      setTimeout(async () => {
+        await logout();
+      }, 1000);
     }
   };
 
   useEffect(() => {
     const fetchAuthStatus = async () => {
-      if (!isAuthenticated && isLoading) {
+      if (isLoading) {
+        setLoading(true);
+        return;
+      }
+
+      if (!isAuthenticated) {
         localStorage.removeItem("userId");
         localStorage.removeItem("accessToken");
         dispatch(logedOut());
-      } else {
-        handlelogin();
+        setLoading(false);
+        return;
       }
+
+      await handlelogin();
+      setLoading(false);
     };
 
     fetchAuthStatus();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading]);
 
   return (
     <>
-      {isLoading && !islogin && (
+      {loading && (
         <div className="min-h-screen flex items-center justify-center bg-gray-900 fixed top-0 left-0 w-full z-50">
           <div className="text-center">
             <div className="relative mb-6">
