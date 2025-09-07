@@ -135,3 +135,7 @@ To avoid SSL certificate warnings in Chrome when using localhost with HTTPS:
    - Restart Chrome to ensure changes take effect
 
 ⚠️ **Note**: These certificates should only be used for local development. Never use self-signed certificates in production.
+
+*sample book data*
+
+[books.json](https://github.com/user-attachments/files/22197642/books.json)
