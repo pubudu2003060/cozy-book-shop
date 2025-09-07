@@ -7,7 +7,7 @@ import AllItems from "./screns/all items/AllItems";
 import About from "./screns/about/About";
 import Contact from "./screns/contact/Contact";
 import { toast, ToastContainer } from "react-toastify";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { freeAxios } from "./api/Axios";
 import axios from "axios";
