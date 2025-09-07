@@ -36,7 +36,7 @@ A secure and modern online bookstore built with the MERN stack, featuring user a
 1. **Clone the repository**
    ```bash
    git clone https://github.com/pubudu2003060/cozy-book-shop
-   cd cozybookshop
+   cd cozy-book-shop
    ```
 
 2. **Install backend dependencies**
