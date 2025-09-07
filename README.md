@@ -79,19 +79,27 @@ VITE_AUDIENCE=your-auth0-audience
 
 ### Running Locally
 
-1. **Start backend**
+1. **Run with Concurrent library**
+   In the root directory, add backend .env file and run bellow command
+   ```bash
+   npm install
+   npm run dev
+   ```
+   → App available at https://localhost:5173
+
+3. **Start backend**
    ```bash
    cd backend
    npm run dev
    ```
-   → API available at http://localhost:5000
+   → API available at https://localhost:5000
 
-2. **Start frontend**
+4. **Start frontend**
    ```bash
    cd frontend
    npm run dev
    ```
-   → App available at http://localhost:5173
+   → App available at https://localhost:5173
 
 ## 🔑 Setting Up Auth0
 
@@ -100,9 +108,9 @@ You must configure both a SPA and an API in Auth0.
 ### Frontend (SPA)
 1. Go to **Applications** → **Create Single Page Application**
 2. Configure the following settings:
-   - **Allowed Callback URLs** → `http://localhost:5173`
-   - **Allowed Logout URLs** → `http://localhost:5173`
-   - **Allowed Web Origins** → `http://localhost:5173`
+   - **Allowed Callback URLs** → `https://localhost:5173`
+   - **Allowed Logout URLs** → `https://localhost:5173`
+   - **Allowed Web Origins** → `https://localhost:5173`
 
 ### Backend (API)
 1. Go to **APIs** → **Create API**
