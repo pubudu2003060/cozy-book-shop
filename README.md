@@ -138,6 +138,6 @@ To avoid SSL certificate warnings in Chrome when using localhost with HTTPS:
 
 
 
-##sample book data
+## sample book data
 
 [books.json](https://github.com/user-attachments/files/22197642/books.json)
