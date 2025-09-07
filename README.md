@@ -117,3 +117,26 @@ You must configure both a SPA and an API in Auth0.
 2. Configure the following settings:
    - **Identifier** → e.g., `https://localhost:5000` (used as AUDIENCE)
    - **Signing Algorithm** → `RS256`
+
+🔒 HTTPS Certificate Setup for Chrome
+To avoid SSL certificate warnings in Chrome when using localhost with HTTPS:
+
+Open Chrome Certificate Manager
+
+Navigate to chrome://certificate-manager/localcerts/usercerts in your Chrome browser
+
+Import Certificates
+
+Click Import button
+Import the following certificate files:
+
+backend/certs/localhost.pem (for backend HTTPS)
+frontend/certs/localhost.pem (for frontend HTTPS)
+
+Trust Certificates
+
+After importing, mark both certificates as trusted for localhost connections
+Restart Chrome to ensure changes take effect
+
+⚠️ Note: These certificates should only be used for local development. Never use self-signed certificates in production.
+  
