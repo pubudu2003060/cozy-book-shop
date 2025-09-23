@@ -14,10 +14,19 @@ const credentials = { key: privateKey, cert: certificate };
 
 const startHTTPSServer = (app, port, database) => {
   const httpsServer = https.createServer(credentials, app);
-  httpsServer.listen(port, async () => {
-    await database();
-    console.log("Server is running on https://localhost:" + port);
-  });
+  database()
+    .then(() => {
+      httpsServer.listen(port, async () => {
+        console.log("Server is running on https://localhost:" + port);
+      });
+    })
+    .catch(() => {
+      console.error(
+        "Failed to start server due to DB connection error:",
+        error
+      );
+      process.exit(1);
+    });
 };
 
 export default startHTTPSServer;

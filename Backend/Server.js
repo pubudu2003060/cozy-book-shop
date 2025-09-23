@@ -16,15 +16,16 @@ dotenv.config();
 
 app.use(
   cors({
-    origin: [
-      "https://localhost:5173",
-      "https://cozy-book-shop-9tc7.vercel.app",
-    ],
+    origin: [process.env.CORS_ORIGIN_LOCAL, process.env.CORS_ORIGIN_PROD],
     credentials: true,
   })
 );
 
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Api work");
+});
 
 app.use("/api/auth", authRouter);
 
