@@ -28,14 +28,11 @@ const App = () => {
     try {
       const token = await getAccessTokenSilently();
 
-      const userInfo = await axios.get(
-        "https://dev-zg2zh4fjwx56n2jo.us.auth0.com/userinfo",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const userInfo = await axios.get(import.meta.env.VITE_AUTH0_TENENT, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const userdata = userInfo.data;
 
